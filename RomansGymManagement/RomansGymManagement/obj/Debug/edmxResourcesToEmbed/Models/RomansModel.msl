@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="romansgy_gymModelStoreContainer" CdmEntityContainer="romansgy_gymEntities">
+    <EntitySetMapping Name="ExpenseHeadDetails">
+      <EntityTypeMapping TypeName="romansgy_gymModel.ExpenseHeadDetail">
+        <MappingFragment StoreEntitySet="ExpenseHeadDetails">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ExpenseHead" ColumnName="ExpenseHead" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="ExpenseDate" ColumnName="ExpenseDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
