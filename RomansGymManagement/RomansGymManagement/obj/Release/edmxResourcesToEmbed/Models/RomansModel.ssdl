@@ -55,6 +55,9 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
     <Property Name="StudentID" Type="int" Nullable="false" />
     <Property Name="CourseName" Type="varchar" MaxLength="255" Nullable="false" />
   </EntityType>
+  <Function Name="GetStudentCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="StudentID" Type="int" Mode="In" />
+  </Function>
   <Function Name="UpsertStudentCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
     <Parameter Name="StudentID" Type="int" Mode="In" />
     <Parameter Name="Name" Type="varchar" Mode="In" />

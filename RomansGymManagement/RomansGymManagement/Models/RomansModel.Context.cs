@@ -31,7 +31,8 @@ namespace RomansGymManagement.Models
         public virtual DbSet<IncomeDetail> IncomeDetails { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<StudentCourse> StudentCourses { get; set; }
-       public virtual ObjectResult<Nullable<int>> UpsertStudentCourse(Nullable<int> studentID, string name, Nullable<int> age, string sex, string parentName, string mobileNumber, string addres, Nullable<decimal> registrationFees, Nullable<decimal> tuitionFees, string imageLocation, Nullable<System.DateTime> createdDate, Nullable<System.DateTime> lastUpdatedDate, Nullable<System.DateTime> deletedDate, string courseXML)       
+    
+        public virtual ObjectResult<Nullable<int>> UpsertStudentCourse(Nullable<int> studentID, string name, Nullable<int> age, string sex, string parentName, string mobileNumber, string addres, Nullable<decimal> registrationFees, Nullable<decimal> tuitionFees, string imageLocation, Nullable<System.DateTime> createdDate, Nullable<System.DateTime> lastUpdatedDate, Nullable<System.DateTime> deletedDate, string courseXML)
         {
             var studentIDParameter = studentID.HasValue ?
                 new ObjectParameter("StudentID", studentID) :
@@ -88,9 +89,17 @@ namespace RomansGymManagement.Models
             var courseXMLParameter = courseXML != null ?
                 new ObjectParameter("CourseXML", courseXML) :
                 new ObjectParameter("CourseXML", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("UpsertStudentCourse", studentIDParameter, nameParameter, ageParameter, sexParameter, parentNameParameter, mobileNumberParameter, addresParameter, registrationFeesParameter, tuitionFeesParameter, imageLocationParameter, createdDateParameter, lastUpdatedDateParameter, deletedDateParameter, courseXMLParameter);
         }
-       
+    
+        public virtual ObjectResult<GetStudentCourse_Result1> GetStudentCourse(Nullable<int> studentID)
+        {
+            var studentIDParameter = studentID.HasValue ?
+                new ObjectParameter("StudentID", studentID) :
+                new ObjectParameter("StudentID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStudentCourse_Result1>("GetStudentCourse", studentIDParameter);
+        }
     }
 }

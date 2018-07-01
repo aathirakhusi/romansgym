@@ -80,7 +80,8 @@ namespace RomansGymManagement.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            var dateAndTime = DateTime.Now;
+            expenseHeadDetail.CreatedDate = dateAndTime.Date;
             db.ExpenseHeadDetails.Add(expenseHeadDetail);
             db.SaveChanges();
 
