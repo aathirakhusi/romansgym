@@ -20,8 +20,82 @@
     <Property Name="IncomeDate" Type="datetime" Nullable="false" />
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'romansgy_gym.romansgy_db.Student' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="StudentID" />
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="Age" />
+      <PropertyRef Name="MobileNumber" />
+      <PropertyRef Name="CreatedDate" />
+      <PropertyRef Name="LastUpdatedDate" />
+    </Key>
+    <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Sex" Type="varchar" MaxLength="20" />
+    <Property Name="ParentName" Type="varchar" MaxLength="50" />
+    <Property Name="MobileNumber" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Addres" Type="varchar" MaxLength="255" />
+    <Property Name="RegistrationFees" Type="money" />
+    <Property Name="TuitionFees" Type="money" />
+    <Property Name="ImageLocation" Type="varchar" MaxLength="255" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="StudentCourse">
+    <Key>
+      <PropertyRef Name="StudentID" />
+      <PropertyRef Name="CourseName" />
+    </Key>
+    <Property Name="StudentID" Type="int" Nullable="false" />
+    <Property Name="CourseName" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <Function Name="UpsertStudentCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="StudentID" Type="int" Mode="In" />
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="Age" Type="int" Mode="In" />
+    <Parameter Name="Sex" Type="varchar" Mode="In" />
+    <Parameter Name="ParentName" Type="varchar" Mode="In" />
+    <Parameter Name="MobileNumber" Type="varchar" Mode="In" />
+    <Parameter Name="Addres" Type="varchar" Mode="In" />
+    <Parameter Name="RegistrationFees" Type="money" Mode="In" />
+    <Parameter Name="TuitionFees" Type="money" Mode="In" />
+    <Parameter Name="ImageLocation" Type="varchar" Mode="In" />
+    <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+    <Parameter Name="LastUpdatedDate" Type="datetime" Mode="In" />
+    <Parameter Name="DeletedDate" Type="datetime" Mode="In" />
+    <Parameter Name="CourseXML" Type="xml" Mode="In" />
+  </Function>
   <EntityContainer Name="romansgy_gymModelStoreContainer">
     <EntitySet Name="ExpenseHeadDetails" EntityType="Self.ExpenseHeadDetails" Schema="romansgy_db" store:Type="Tables" />
     <EntitySet Name="IncomeDetails" EntityType="Self.IncomeDetails" Schema="romansgy_db" store:Type="Tables" />
+    <EntitySet Name="Student" EntityType="Self.Student" store:Type="Tables" store:Schema="romansgy_db">
+      <DefiningQuery>SELECT 
+    [Student].[StudentID] AS [StudentID], 
+    [Student].[Name] AS [Name], 
+    [Student].[Age] AS [Age], 
+    [Student].[Sex] AS [Sex], 
+    [Student].[ParentName] AS [ParentName], 
+    [Student].[MobileNumber] AS [MobileNumber], 
+    [Student].[Addres] AS [Addres], 
+    [Student].[RegistrationFees] AS [RegistrationFees], 
+    [Student].[TuitionFees] AS [TuitionFees], 
+    [Student].[ImageLocation] AS [ImageLocation], 
+    [Student].[CreatedDate] AS [CreatedDate], 
+    [Student].[LastUpdatedDate] AS [LastUpdatedDate], 
+    [Student].[DeletedDate] AS [DeletedDate]
+    FROM [romansgy_db].[Student] AS [Student]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="StudentCourse" EntityType="Self.StudentCourse" store:Type="Tables" store:Schema="romansgy_db">
+      <DefiningQuery>SELECT 
+    [StudentCourse].[StudentID] AS [StudentID], 
+    [StudentCourse].[CourseName] AS [CourseName]
+    FROM [romansgy_db].[StudentCourse] AS [StudentCourse]</DefiningQuery>
+    </EntitySet>
   </EntityContainer>
 </Schema>

@@ -12,6 +12,8 @@ namespace RomansGymManagement.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class romansgy_gymEntities : DbContext
     {
@@ -27,5 +29,68 @@ namespace RomansGymManagement.Models
     
         public virtual DbSet<ExpenseHeadDetail> ExpenseHeadDetails { get; set; }
         public virtual DbSet<IncomeDetail> IncomeDetails { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
+        public virtual DbSet<StudentCourse> StudentCourses { get; set; }
+       public virtual ObjectResult<Nullable<int>> UpsertStudentCourse(Nullable<int> studentID, string name, Nullable<int> age, string sex, string parentName, string mobileNumber, string addres, Nullable<decimal> registrationFees, Nullable<decimal> tuitionFees, string imageLocation, Nullable<System.DateTime> createdDate, Nullable<System.DateTime> lastUpdatedDate, Nullable<System.DateTime> deletedDate, string courseXML)       
+        {
+            var studentIDParameter = studentID.HasValue ?
+                new ObjectParameter("StudentID", studentID) :
+                new ObjectParameter("StudentID", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var ageParameter = age.HasValue ?
+                new ObjectParameter("Age", age) :
+                new ObjectParameter("Age", typeof(int));
+    
+            var sexParameter = sex != null ?
+                new ObjectParameter("Sex", sex) :
+                new ObjectParameter("Sex", typeof(string));
+    
+            var parentNameParameter = parentName != null ?
+                new ObjectParameter("ParentName", parentName) :
+                new ObjectParameter("ParentName", typeof(string));
+    
+            var mobileNumberParameter = mobileNumber != null ?
+                new ObjectParameter("MobileNumber", mobileNumber) :
+                new ObjectParameter("MobileNumber", typeof(string));
+    
+            var addresParameter = addres != null ?
+                new ObjectParameter("Addres", addres) :
+                new ObjectParameter("Addres", typeof(string));
+    
+            var registrationFeesParameter = registrationFees.HasValue ?
+                new ObjectParameter("RegistrationFees", registrationFees) :
+                new ObjectParameter("RegistrationFees", typeof(decimal));
+    
+            var tuitionFeesParameter = tuitionFees.HasValue ?
+                new ObjectParameter("TuitionFees", tuitionFees) :
+                new ObjectParameter("TuitionFees", typeof(decimal));
+    
+            var imageLocationParameter = imageLocation != null ?
+                new ObjectParameter("ImageLocation", imageLocation) :
+                new ObjectParameter("ImageLocation", typeof(string));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastUpdatedDateParameter = lastUpdatedDate.HasValue ?
+                new ObjectParameter("LastUpdatedDate", lastUpdatedDate) :
+                new ObjectParameter("LastUpdatedDate", typeof(System.DateTime));
+    
+            var deletedDateParameter = deletedDate.HasValue ?
+                new ObjectParameter("DeletedDate", deletedDate) :
+                new ObjectParameter("DeletedDate", typeof(System.DateTime));
+    
+            var courseXMLParameter = courseXML != null ?
+                new ObjectParameter("CourseXML", courseXML) :
+                new ObjectParameter("CourseXML", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("UpsertStudentCourse", studentIDParameter, nameParameter, ageParameter, sexParameter, parentNameParameter, mobileNumberParameter, addresParameter, registrationFeesParameter, tuitionFeesParameter, imageLocationParameter, createdDateParameter, lastUpdatedDateParameter, deletedDateParameter, courseXMLParameter);
+        }
+       
     }
 }

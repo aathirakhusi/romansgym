@@ -13,6 +13,24 @@
   <EntityContainer Name="romansgy_gymEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="ExpenseHeadDetails" EntityType="Self.ExpenseHeadDetail" />
     <EntitySet Name="IncomeDetails" EntityType="romansgy_gymModel.IncomeDetail" />
+    <EntitySet Name="Students" EntityType="romansgy_gymModel.Student" />
+    <EntitySet Name="StudentCourses" EntityType="romansgy_gymModel.StudentCourse" />
+    <FunctionImport Name="UpsertStudentCourse" ReturnType="Collection(Int32)">
+      <Parameter Name="StudentID" Mode="In" Type="Int32" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Age" Mode="In" Type="Int32" />
+      <Parameter Name="Sex" Mode="In" Type="String" />
+      <Parameter Name="ParentName" Mode="In" Type="String" />
+      <Parameter Name="MobileNumber" Mode="In" Type="String" />
+      <Parameter Name="Addres" Mode="In" Type="String" />
+      <Parameter Name="RegistrationFees" Mode="In" Type="Decimal" />
+      <Parameter Name="TuitionFees" Mode="In" Type="Decimal" />
+      <Parameter Name="ImageLocation" Mode="In" Type="String" />
+      <Parameter Name="CreatedDate" Mode="In" Type="DateTime" />
+      <Parameter Name="LastUpdatedDate" Mode="In" Type="DateTime" />
+      <Parameter Name="DeletedDate" Mode="In" Type="DateTime" />
+      <Parameter Name="CourseXML" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="IncomeDetail">
     <Key>
@@ -23,5 +41,36 @@
     <Property Name="Amount" Type="Int32" Nullable="false" />
     <Property Name="IncomeDate" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="StudentID" />
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="Age" />
+      <PropertyRef Name="MobileNumber" />
+      <PropertyRef Name="CreatedDate" />
+      <PropertyRef Name="LastUpdatedDate" />
+    </Key>
+    <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Age" Type="Int32" Nullable="false" />
+    <Property Name="Sex" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ParentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MobileNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Addres" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="RegistrationFees" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="TuitionFees" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="ImageLocation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="StudentCourse">
+    <Key>
+      <PropertyRef Name="StudentID" />
+      <PropertyRef Name="CourseName" />
+    </Key>
+    <Property Name="StudentID" Type="Int32" Nullable="false" />
+    <Property Name="CourseName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>

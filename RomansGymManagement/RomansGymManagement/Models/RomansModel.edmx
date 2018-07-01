@@ -25,9 +25,83 @@
           <Property Name="IncomeDate" Type="datetime" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'romansgy_gym.romansgy_db.Student' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Age" />
+            <PropertyRef Name="MobileNumber" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="LastUpdatedDate" />
+          </Key>
+          <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Age" Type="int" Nullable="false" />
+          <Property Name="Sex" Type="varchar" MaxLength="20" />
+          <Property Name="ParentName" Type="varchar" MaxLength="50" />
+          <Property Name="MobileNumber" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Addres" Type="varchar" MaxLength="255" />
+          <Property Name="RegistrationFees" Type="money" />
+          <Property Name="TuitionFees" Type="money" />
+          <Property Name="ImageLocation" Type="varchar" MaxLength="255" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="DeletedDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="StudentCourse">
+          <Key>
+            <PropertyRef Name="StudentID" />
+            <PropertyRef Name="CourseName" />
+          </Key>
+          <Property Name="StudentID" Type="int" Nullable="false" />
+          <Property Name="CourseName" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Function Name="UpsertStudentCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+          <Parameter Name="StudentID" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Age" Type="int" Mode="In" />
+          <Parameter Name="Sex" Type="varchar" Mode="In" />
+          <Parameter Name="ParentName" Type="varchar" Mode="In" />
+          <Parameter Name="MobileNumber" Type="varchar" Mode="In" />
+          <Parameter Name="Addres" Type="varchar" Mode="In" />
+          <Parameter Name="RegistrationFees" Type="money" Mode="In" />
+          <Parameter Name="TuitionFees" Type="money" Mode="In" />
+          <Parameter Name="ImageLocation" Type="varchar" Mode="In" />
+          <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+          <Parameter Name="LastUpdatedDate" Type="datetime" Mode="In" />
+          <Parameter Name="DeletedDate" Type="datetime" Mode="In" />
+          <Parameter Name="CourseXML" Type="xml" Mode="In" />
+        </Function>
         <EntityContainer Name="romansgy_gymModelStoreContainer">
           <EntitySet Name="ExpenseHeadDetails" EntityType="Self.ExpenseHeadDetails" Schema="romansgy_db" store:Type="Tables" />
           <EntitySet Name="IncomeDetails" EntityType="Self.IncomeDetails" Schema="romansgy_db" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" store:Type="Tables" store:Schema="romansgy_db">
+            <DefiningQuery>SELECT 
+    [Student].[StudentID] AS [StudentID], 
+    [Student].[Name] AS [Name], 
+    [Student].[Age] AS [Age], 
+    [Student].[Sex] AS [Sex], 
+    [Student].[ParentName] AS [ParentName], 
+    [Student].[MobileNumber] AS [MobileNumber], 
+    [Student].[Addres] AS [Addres], 
+    [Student].[RegistrationFees] AS [RegistrationFees], 
+    [Student].[TuitionFees] AS [TuitionFees], 
+    [Student].[ImageLocation] AS [ImageLocation], 
+    [Student].[CreatedDate] AS [CreatedDate], 
+    [Student].[LastUpdatedDate] AS [LastUpdatedDate], 
+    [Student].[DeletedDate] AS [DeletedDate]
+    FROM [romansgy_db].[Student] AS [Student]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="StudentCourse" EntityType="Self.StudentCourse" store:Type="Tables" store:Schema="romansgy_db">
+            <DefiningQuery>SELECT 
+    [StudentCourse].[StudentID] AS [StudentID], 
+    [StudentCourse].[CourseName] AS [CourseName]
+    FROM [romansgy_db].[StudentCourse] AS [StudentCourse]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -46,6 +120,24 @@
         <EntityContainer Name="romansgy_gymEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ExpenseHeadDetails" EntityType="Self.ExpenseHeadDetail" />
           <EntitySet Name="IncomeDetails" EntityType="romansgy_gymModel.IncomeDetail" />
+          <EntitySet Name="Students" EntityType="romansgy_gymModel.Student" />
+          <EntitySet Name="StudentCourses" EntityType="romansgy_gymModel.StudentCourse" />
+          <FunctionImport Name="UpsertStudentCourse" ReturnType="Collection(Int32)">
+            <Parameter Name="StudentID" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Age" Mode="In" Type="Int32" />
+            <Parameter Name="Sex" Mode="In" Type="String" />
+            <Parameter Name="ParentName" Mode="In" Type="String" />
+            <Parameter Name="MobileNumber" Mode="In" Type="String" />
+            <Parameter Name="Addres" Mode="In" Type="String" />
+            <Parameter Name="RegistrationFees" Mode="In" Type="Decimal" />
+            <Parameter Name="TuitionFees" Mode="In" Type="Decimal" />
+            <Parameter Name="ImageLocation" Mode="In" Type="String" />
+            <Parameter Name="CreatedDate" Mode="In" Type="DateTime" />
+            <Parameter Name="LastUpdatedDate" Mode="In" Type="DateTime" />
+            <Parameter Name="DeletedDate" Mode="In" Type="DateTime" />
+            <Parameter Name="CourseXML" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="IncomeDetail">
           <Key>
@@ -56,6 +148,37 @@
           <Property Name="Amount" Type="Int32" Nullable="false" />
           <Property Name="IncomeDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Age" />
+            <PropertyRef Name="MobileNumber" />
+            <PropertyRef Name="CreatedDate" />
+            <PropertyRef Name="LastUpdatedDate" />
+          </Key>
+          <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="Sex" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ParentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Addres" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="RegistrationFees" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="TuitionFees" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ImageLocation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="StudentCourse">
+          <Key>
+            <PropertyRef Name="StudentID" />
+            <PropertyRef Name="CourseName" />
+          </Key>
+          <Property Name="StudentID" Type="Int32" Nullable="false" />
+          <Property Name="CourseName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -85,6 +208,34 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="romansgy_gymModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ImageLocation" ColumnName="ImageLocation" />
+                <ScalarProperty Name="TuitionFees" ColumnName="TuitionFees" />
+                <ScalarProperty Name="RegistrationFees" ColumnName="RegistrationFees" />
+                <ScalarProperty Name="Addres" ColumnName="Addres" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="ParentName" ColumnName="ParentName" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentCourses">
+            <EntityTypeMapping TypeName="romansgy_gymModel.StudentCourse">
+              <MappingFragment StoreEntitySet="StudentCourse">
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UpsertStudentCourse" FunctionName="romansgy_gymModel.Store.UpsertStudentCourse" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
