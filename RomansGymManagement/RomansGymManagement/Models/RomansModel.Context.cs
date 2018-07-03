@@ -31,6 +31,9 @@ namespace RomansGymManagement.Models
         public virtual DbSet<IncomeDetail> IncomeDetails { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<StudentCourse> StudentCourses { get; set; }
+        public virtual DbSet<Course> Courses { get; set; }
+        public virtual DbSet<Staff> Staffs { get; set; }
+        public virtual DbSet<RegistrationFee> RegistrationFees { get; set; }
     
         public virtual ObjectResult<Nullable<int>> UpsertStudentCourse(Nullable<int> studentID, string name, Nullable<int> age, string sex, string parentName, string mobileNumber, string addres, Nullable<decimal> registrationFees, Nullable<decimal> tuitionFees, string imageLocation, Nullable<System.DateTime> createdDate, Nullable<System.DateTime> lastUpdatedDate, Nullable<System.DateTime> deletedDate, string courseXML)
         {

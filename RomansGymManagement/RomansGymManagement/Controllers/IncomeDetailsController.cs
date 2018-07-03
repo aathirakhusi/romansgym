@@ -91,6 +91,7 @@ namespace RomansGymManagement.Controllers
 
         // DELETE: api/IncomeDetails/5
         [ResponseType(typeof(IncomeDetail))]
+        [Route("api/Income/{id:int}")]
         public IHttpActionResult DeleteIncomeDetail(int id)
         {
             IncomeDetail incomeDetail = db.IncomeDetails.Find(id);

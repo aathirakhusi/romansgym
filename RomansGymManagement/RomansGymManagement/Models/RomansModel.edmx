@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="romansgy_gymModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="ExpenseHeadDetails">
           <Key>
             <PropertyRef Name="ID" />
@@ -24,6 +32,22 @@
           <Property Name="Amount" Type="int" Nullable="false" />
           <Property Name="IncomeDate" Type="datetime" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RegistrationFees">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="32" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'romansgy_gym.romansgy_db.Student' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -80,8 +104,11 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
           <Parameter Name="CourseXML" Type="xml" Mode="In" />
         </Function>
         <EntityContainer Name="romansgy_gymModelStoreContainer">
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="romansgy_db" store:Type="Tables" />
           <EntitySet Name="ExpenseHeadDetails" EntityType="Self.ExpenseHeadDetails" Schema="romansgy_db" store:Type="Tables" />
           <EntitySet Name="IncomeDetails" EntityType="Self.IncomeDetails" Schema="romansgy_db" store:Type="Tables" />
+          <EntitySet Name="RegistrationFees" EntityType="Self.RegistrationFees" Schema="romansgy_db" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="romansgy_db" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" store:Type="Tables" store:Schema="romansgy_db">
             <DefiningQuery>SELECT 
     [Student].[StudentID] AS [StudentID], 
@@ -142,8 +169,11 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
             <Parameter Name="CourseXML" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetStudentCourse" ReturnType="Collection(romansgy_gymModel.GetStudentCourse_Result1)">
-            <Parameter Name="StudentID" Mode="In" Type="Int32" />
+          <Parameter Name="StudentID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="Courses" EntityType="romansgy_gymModel.Course" />
+          <EntitySet Name="Staffs" EntityType="romansgy_gymModel.Staff" />
+          <EntitySet Name="RegistrationFees" EntityType="romansgy_gymModel.RegistrationFee" />
         </EntityContainer>
         <EntityType Name="IncomeDetail">
           <Key>
@@ -219,6 +249,30 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
           <Property Type="DateTime" Name="DeletedDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="CourseName" Nullable="false" MaxLength="255" />
         </ComplexType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="RegistrationFee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -295,6 +349,33 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="romansgy_gymModel.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staffs">
+            <EntityTypeMapping TypeName="romansgy_gymModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RegistrationFees">
+            <EntityTypeMapping TypeName="romansgy_gymModel.RegistrationFee">
+              <MappingFragment StoreEntitySet="RegistrationFees">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

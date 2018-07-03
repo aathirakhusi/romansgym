@@ -95,11 +95,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\ExpenseHeadDetailsController.cs" />
+    <Compile Include="Controllers\RegistrationFeesController.cs" />
+    <Compile Include="Controllers\StaffsController.cs" />
     <Compile Include="Controllers\StudentManagementController.cs" />
     <Compile Include="Controllers\IncomeDetailsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Course.cs">
+      <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ExpenseHeadDetail.cs">
       <DependentUpon>RomansModel.tt</DependentUpon>
@@ -111,6 +117,9 @@
       <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IncomeDetail.cs">
+      <DependentUpon>RomansModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RegistrationFee.cs">
       <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RomansModel.Context.cs">
@@ -127,6 +136,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RomansModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Staff.cs">
+      <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Student.cs">
       <DependentUpon>RomansModel.tt</DependentUpon>

@@ -34,6 +34,9 @@
     <FunctionImport Name="GetStudentCourse" ReturnType="Collection(romansgy_gymModel.GetStudentCourse_Result1)">
       <Parameter Name="StudentID" Mode="In" Type="Int32" />
     </FunctionImport>
+    <EntitySet Name="Courses" EntityType="romansgy_gymModel.Course" />
+    <EntitySet Name="Staffs" EntityType="romansgy_gymModel.Staff" />
+    <EntitySet Name="RegistrationFees" EntityType="romansgy_gymModel.RegistrationFee" />
   </EntityContainer>
   <EntityType Name="IncomeDetail">
     <Key>
@@ -109,4 +112,28 @@
     <Property Type="DateTime" Name="DeletedDate" Nullable="true" Precision="23" />
     <Property Type="String" Name="CourseName" Nullable="false" MaxLength="255" />
   </ComplexType>
+  <EntityType Name="Course">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CourseName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Amount" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Staff">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="RegistrationFee">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+  </EntityType>
 </Schema>
