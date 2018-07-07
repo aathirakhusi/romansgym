@@ -18,3 +18,4 @@ D:\RomansMgmntAPI\RomansGymManagement\RomansGymManagement\bin\System.Web.Http.Co
 D:\RomansMgmntAPI\RomansGymManagement\RomansGymManagement\bin\System.Web.Http.WebHost.xml
 D:\RomansMgmntAPI\RomansGymManagement\RomansGymManagement\obj\Release\RomansGymManagement.dll
 D:\RomansMgmntAPI\RomansGymManagement\RomansGymManagement\obj\Release\RomansGymManagement.pdb
+D:\RomansMgmntAPI\RomansGymManagement\RomansGymManagement\obj\Release\RomansGymManagement.csprojResolveAssemblyReference.cache

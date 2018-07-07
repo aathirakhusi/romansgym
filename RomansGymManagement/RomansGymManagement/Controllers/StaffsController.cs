@@ -37,6 +37,21 @@ namespace RomansGymManagement.Controllers
             return Ok(staff);
         }
 
+         // GET: api/Staff/GetUserLogin
+        [ResponseType(typeof(GetUserLogin_Result))]
+        [Route("api/Staff/GetUserLogin/{userName}/{password}", Name = "GetUserLogin")]
+        public HttpResponseMessage GetUserLogin(string userName, string password)
+        {
+            var userLogin = db.GetUserLogin(userName, password);
+            if(userLogin != null)
+            {
+             return Request.CreateResponse(HttpStatusCode.OK, userLogin);
+            }
+            else{
+                return Request.CreateResponse(HttpStatusCode.NoContent);
+            }
+        }
+
         // PUT: api/Staffs/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutStaff(int id, Staff staff)

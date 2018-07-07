@@ -104,5 +104,32 @@ namespace RomansGymManagement.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStudentCourse_Result1>("GetStudentCourse", studentIDParameter);
         }
+    
+        public virtual int UpsertRegistrationFees(Nullable<decimal> registrationAmount)
+        {
+            var registrationAmountParameter = registrationAmount.HasValue ?
+                new ObjectParameter("RegistrationAmount", registrationAmount) :
+                new ObjectParameter("RegistrationAmount", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpsertRegistrationFees", registrationAmountParameter);
+        }
+    
+        public virtual ObjectResult<GetUserLogin_Result> GetUserLogin(string userName, string password)
+        {
+            var userNameParameter = userName != null ?
+                new ObjectParameter("userName", userName) :
+                new ObjectParameter("userName", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("password", password) :
+                new ObjectParameter("password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserLogin_Result>("GetUserLogin", userNameParameter, passwordParameter);
+        }
+    
+        public virtual ObjectResult<GetStudents_Result> GetStudents()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStudents_Result>("GetStudents");
+        }
     }
 }

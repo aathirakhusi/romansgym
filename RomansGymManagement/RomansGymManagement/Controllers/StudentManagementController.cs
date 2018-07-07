@@ -4,7 +4,9 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Net;
+using System.Web;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -41,6 +43,7 @@ namespace RomansGymManagement.Controllers
             }
             var studentId = db.UpsertStudentCourse(StudentDetails.StudentID, StudentDetails.Name, StudentDetails.Age, StudentDetails.Sex, StudentDetails.ParentName, StudentDetails.MobileNumber, StudentDetails.Addres, StudentDetails.RegistrationFees, StudentDetails.TuitionFees, StudentDetails.ImageLocation, StudentDetails.CreatedDate, StudentDetails.LastUpdatedDate, StudentDetails.DeletedDate, this.ConstructCourseXML(StudentDetails.StudentCourse)).ToList();
             StudentDetails.StudentID = studentId.Select(i => i.Value).First();
+
             return CreatedAtRoute("UpsertStudentDetails", new { id = StudentManagmentModel.StudentID }, StudentDetails);
         }
 
@@ -83,6 +86,112 @@ namespace RomansGymManagement.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.NoContent, StudentManagmentModel);
         }
+
+        // GET: api/Student/5
+        [ResponseType(typeof(GetStudents_Result))]
+        [Route("api/Student/GetAllStudents", Name = "GetAllStudents")]
+        [HttpGet]
+        public HttpResponseMessage GetAllStudents(string name ="")
+        {
+            var students = db.GetStudents().ToList();
+            List<StudentManagementModel> StudentManagmentModelList = new List<StudentManagementModel>();
+            if (students.Any())
+            {
+                foreach (var student in students)
+                {
+                    StudentManagementModel StudentManagementModel = new StudentManagementModel();
+                    StudentManagementModel.Addres = student.Addres;
+                    StudentManagementModel.Age = student.Age;
+                    StudentManagementModel.MobileNumber = student.MobileNumber;
+                    StudentManagementModel.Name = student.Name;
+                    StudentManagementModel.ParentName = student.ParentName;
+                    StudentManagementModel.RegistrationFees = student.RegistrationFees;
+                    StudentManagementModel.Sex = student.Sex;
+                    StudentManagementModel.StudentID = student.StudentID;
+                    StudentManagementModel.TuitionFees = student.TuitionFees;
+                    StudentManagmentModelList.Add(StudentManagementModel);
+                }
+                if (!string.IsNullOrEmpty(name))
+                {
+                    var result = StudentManagmentModelList.Where(x => x.Name.StartsWith(name, StringComparison.InvariantCultureIgnoreCase)).Select(x => x).ToList();
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, StudentManagmentModelList);
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NoContent);
+            }
+            
+        }
+
+        [Route("api/Student/PostUserImage/{id}")]
+        public async Task<HttpResponseMessage> PostUserImage(int id)
+        {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            try
+            {
+                int userId = id;
+                var httpRequest = HttpContext.Current.Request;
+
+                foreach (string file in httpRequest.Files)
+                {
+                    HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created);
+
+                    var postedFile = httpRequest.Files[file];
+                    if (postedFile != null && postedFile.ContentLength > 0)
+                    {
+
+                        int MaxContentLength = 1024 * 1024 * 5; //Size = 1 MB  
+
+                        IList<string> AllowedFileExtensions = new List<string> { ".jpg", ".png" };
+                        var ext = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('.'));
+                        var extension = ext.ToLower();
+                        if (!AllowedFileExtensions.Contains(extension))
+                        {
+
+                            var message = string.Format("Please Upload image of type .jpg,.png.");
+
+                            dict.Add("error", message);
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
+                        }
+                        else if (postedFile.ContentLength > MaxContentLength)
+                        {
+
+                            var message = string.Format("Please Upload a file upto 5 mb.");
+
+                            dict.Add("error", message);
+                            return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
+                        }
+                        else
+                        {
+
+
+
+                            var filePath = HttpContext.Current.Server.MapPath("~/Userimage/" + id.ToString() + extension);
+
+                            postedFile.SaveAs(filePath);
+
+                        }
+                    }
+
+                    var message1 = string.Format("Image Updated Successfully.");
+                    return Request.CreateErrorResponse(HttpStatusCode.Created, message1); ;
+                }
+                var res = string.Format("Please Upload a image.");
+                dict.Add("error", res);
+                return Request.CreateResponse(HttpStatusCode.NotFound, dict);
+            }
+            catch (Exception ex)
+            {
+                var res = string.Format("some Message");
+                dict.Add("error", res);
+                return Request.CreateResponse(HttpStatusCode.NotFound, dict);
+            }
+        }  
 
         private string ConstructCourseXML(List<string> StudentCousrses)
         {

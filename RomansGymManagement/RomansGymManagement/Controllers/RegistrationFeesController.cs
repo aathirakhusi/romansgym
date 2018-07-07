@@ -12,6 +12,7 @@ using RomansGymManagement.Models;
 
 namespace RomansGymManagement.Controllers
 {
+    [Route("api/RegistrationFees")]
     public class RegistrationFeesController : ApiController
     {
         private romansgy_gymEntities db = new romansgy_gymEntities();
@@ -22,8 +23,23 @@ namespace RomansGymManagement.Controllers
             return db.RegistrationFees;
         }
 
-       
         // POST: api/RegistrationFees
+        [ResponseType(typeof(RegistrationFee))]
+        [Route("api/Registration", Name = "UpsertRegistrationFee")]
+        public IHttpActionResult UpsertRegistrationFee(RegistrationFee registrationFee)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.UpsertRegistrationFees(registrationFee.Amount);
+            db.SaveChanges();
+
+            return CreatedAtRoute("UpsertRegistrationFee", new { id = registrationFee.ID }, registrationFee);
+        }
+       
+       /* // POST: api/RegistrationFees
         [ResponseType(typeof(RegistrationFee))]
         public IHttpActionResult PostRegistrationFee(RegistrationFee registrationFee)
         {
@@ -66,6 +82,6 @@ namespace RomansGymManagement.Controllers
         private bool RegistrationFeeExists(int id)
         {
             return db.RegistrationFees.Count(e => e.ID == id) > 0;
-        }
+        }*/
     }
 }

@@ -116,9 +116,16 @@
     <Compile Include="Models\GetStudentCourse_Result1.cs">
       <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetStudents_Result.cs">
+      <DependentUpon>RomansModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetUserLogin_Result.cs">
+      <DependentUpon>RomansModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IncomeDetail.cs">
       <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PagingParameterModel.cs" />
     <Compile Include="Models\RegistrationFee.cs">
       <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>
@@ -168,7 +175,9 @@
       <DependentUpon>RomansModel.edmx</DependentUpon>
       <LastGenOutput>RomansModel.cs</LastGenOutput>
     </Content>
-    <None Include="Properties\PublishProfiles\RomansSite.pubxml" />
+    <None Include="Properties\PublishProfiles\RomansSite.pubxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -178,6 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UserImage\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

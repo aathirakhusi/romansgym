@@ -37,6 +37,14 @@
     <EntitySet Name="Courses" EntityType="romansgy_gymModel.Course" />
     <EntitySet Name="Staffs" EntityType="romansgy_gymModel.Staff" />
     <EntitySet Name="RegistrationFees" EntityType="romansgy_gymModel.RegistrationFee" />
+    <FunctionImport Name="UpsertRegistrationFees">
+      <Parameter Name="RegistrationAmount" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="GetUserLogin" ReturnType="Collection(romansgy_gymModel.GetUserLogin_Result)">
+      <Parameter Name="userName" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetStudents" ReturnType="Collection(romansgy_gymModel.GetStudents_Result)" />
   </EntityContainer>
   <EntityType Name="IncomeDetail">
     <Key>
@@ -136,4 +144,25 @@
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
   </EntityType>
+  <ComplexType Name="GetUserLogin_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="UserName" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Password" Nullable="false" MaxLength="32" />
+  </ComplexType>
+  <ComplexType Name="GetStudents_Result">
+    <Property Type="Int32" Name="StudentID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="Age" Nullable="false" />
+    <Property Type="String" Name="Sex" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="ParentName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="MobileNumber" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Addres" Nullable="true" MaxLength="255" />
+    <Property Type="Decimal" Name="RegistrationFees" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="TuitionFees" Nullable="true" Precision="19" />
+    <Property Type="String" Name="ImageLocation" Nullable="true" MaxLength="255" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="LastUpdatedDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="DeletedDate" Nullable="true" Precision="23" />
+  </ComplexType>
 </Schema>

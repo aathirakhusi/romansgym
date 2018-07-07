@@ -82,6 +82,14 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
   <Function Name="GetStudentCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
     <Parameter Name="StudentID" Type="int" Mode="In" />
   </Function>
+  <Function Name="GetStudents" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db" />
+  <Function Name="GetUserLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="userName" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="UpsertRegistrationFees" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="RegistrationAmount" Type="money" Mode="In" />
+  </Function>
   <Function Name="UpsertStudentCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
     <Parameter Name="StudentID" Type="int" Mode="In" />
     <Parameter Name="Name" Type="varchar" Mode="In" />
