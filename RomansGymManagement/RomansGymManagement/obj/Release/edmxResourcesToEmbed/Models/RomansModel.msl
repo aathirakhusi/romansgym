@@ -26,6 +26,8 @@
     <EntitySetMapping Name="Students">
       <EntityTypeMapping TypeName="romansgy_gymModel.Student">
         <MappingFragment StoreEntitySet="Student">
+          <ScalarProperty Name="Courses" ColumnName="Courses" />
+          <ScalarProperty Name="AdmissionNumber" ColumnName="AdmissionNumber" />
           <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
           <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -128,5 +130,62 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="UpsertStudentCoursevOne" FunctionName="romansgy_gymModel.Store.UpsertStudentCoursevOne" />
+    <FunctionImportMapping FunctionImportName="GetStudentCoursevOne" FunctionName="romansgy_gymModel.Store.GetStudentCoursevOne">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="romansgy_gymModel.GetStudentCoursevOne_Result">
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="Sex" ColumnName="Sex" />
+          <ScalarProperty Name="ParentName" ColumnName="ParentName" />
+          <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+          <ScalarProperty Name="Addres" ColumnName="Addres" />
+          <ScalarProperty Name="RegistrationFees" ColumnName="RegistrationFees" />
+          <ScalarProperty Name="TuitionFees" ColumnName="TuitionFees" />
+          <ScalarProperty Name="ImageLocation" ColumnName="ImageLocation" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+          <ScalarProperty Name="AdmissionNumber" ColumnName="AdmissionNumber" />
+          <ScalarProperty Name="Courses" ColumnName="Courses" />
+          <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetStudentsvOne" FunctionName="romansgy_gymModel.Store.GetStudentsvOne">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="romansgy_gymModel.GetStudentsvOne_Result">
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="Sex" ColumnName="Sex" />
+          <ScalarProperty Name="ParentName" ColumnName="ParentName" />
+          <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+          <ScalarProperty Name="Addres" ColumnName="Addres" />
+          <ScalarProperty Name="RegistrationFees" ColumnName="RegistrationFees" />
+          <ScalarProperty Name="TuitionFees" ColumnName="TuitionFees" />
+          <ScalarProperty Name="ImageLocation" ColumnName="ImageLocation" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+          <ScalarProperty Name="AdmissionNumber" ColumnName="AdmissionNumber" />
+          <ScalarProperty Name="Courses" ColumnName="Courses" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="UpdateImageLocation" FunctionName="romansgy_gymModel.Store.UpdateImageLocation" />
+    <EntitySetMapping Name="DeviceNotifications">
+      <EntityTypeMapping TypeName="romansgy_gymModel.DeviceNotification">
+        <MappingFragment StoreEntitySet="DeviceNotification">
+          <ScalarProperty Name="FCMRegistrationID" ColumnName="FCMRegistrationID" />
+          <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="UpsertDeviceNotification" FunctionName="romansgy_gymModel.Store.UpsertDeviceNotification" />
+    <FunctionImportMapping FunctionImportName="GetFCMIds" FunctionName="romansgy_gymModel.Store.GetFCMIds" />
+    <FunctionImportMapping FunctionImportName="DeleteDeviceNotification" FunctionName="romansgy_gymModel.Store.DeleteDeviceNotification" />
   </EntityContainerMapping>
 </Mapping>

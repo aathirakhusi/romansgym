@@ -27,5 +27,7 @@ namespace RomansGymManagement.Models
         public System.DateTime CreatedDate { get; set; }
         public System.DateTime LastUpdatedDate { get; set; }
         public Nullable<System.DateTime> DeletedDate { get; set; }
+        public string AdmissionNumber { get; set; }
+        public string Courses { get; set; }
     }
 }

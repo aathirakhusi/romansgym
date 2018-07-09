@@ -97,6 +97,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\ExpenseHeadDetailsController.cs" />
+    <Compile Include="Controllers\FireBaseController.cs" />
     <Compile Include="Controllers\RegistrationFeesController.cs" />
     <Compile Include="Controllers\StaffsController.cs" />
     <Compile Include="Controllers\StudentManagementController.cs" />
@@ -107,13 +108,22 @@
     <Compile Include="Models\Course.cs">
       <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DeviceNotification.cs">
+      <DependentUpon>RomansModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ExpenseHeadDetail.cs">
+      <DependentUpon>RomansModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetStudentCoursevOne_Result.cs">
       <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetStudentCourse_Result.cs">
       <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetStudentCourse_Result1.cs">
+      <DependentUpon>RomansModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetStudentsvOne_Result.cs">
       <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetStudents_Result.cs">

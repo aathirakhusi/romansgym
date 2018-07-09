@@ -41,7 +41,7 @@ namespace RomansGymManagement.Controllers
                 var dateAndTime = DateTime.Now;
                 StudentDetails.LastUpdatedDate = dateAndTime.Date;
             }
-            var studentId = db.UpsertStudentCourse(StudentDetails.StudentID, StudentDetails.Name, StudentDetails.Age, StudentDetails.Sex, StudentDetails.ParentName, StudentDetails.MobileNumber, StudentDetails.Addres, StudentDetails.RegistrationFees, StudentDetails.TuitionFees, StudentDetails.ImageLocation, StudentDetails.CreatedDate, StudentDetails.LastUpdatedDate, StudentDetails.DeletedDate, this.ConstructCourseXML(StudentDetails.StudentCourse)).ToList();
+            var studentId = db.UpsertStudentCoursevOne(StudentDetails.StudentID, StudentDetails.Name, StudentDetails.Age, StudentDetails.Sex, StudentDetails.ParentName, StudentDetails.MobileNumber, StudentDetails.Addres, StudentDetails.RegistrationFees, StudentDetails.TuitionFees, StudentDetails.ImageLocation, StudentDetails.CreatedDate, StudentDetails.LastUpdatedDate, StudentDetails.DeletedDate,StudentDetails.AdmissionNumber,StudentDetails.Courses, this.ConstructCourseXML(StudentDetails.StudentCourse)).ToList();
             StudentDetails.StudentID = studentId.Select(i => i.Value).First();
 
             return CreatedAtRoute("UpsertStudentDetails", new { id = StudentManagmentModel.StudentID }, StudentDetails);
@@ -54,7 +54,7 @@ namespace RomansGymManagement.Controllers
         public HttpResponseMessage GetStudentDetails(int id)
         {
             StudentManagementModel StudentManagmentModel = new StudentManagementModel();
-            var studentDetails = db.GetStudentCourse(id).ToList();
+            var studentDetails = db.GetStudentCoursevOne(id).ToList();
             if (studentDetails.Count != 0)
             {
                 var deletedDate = studentDetails.Select(x => x.DeletedDate).First();
@@ -74,7 +74,8 @@ namespace RomansGymManagement.Controllers
                     StudentManagmentModel.CreatedDate = studentDetails.Select(x => x.CreatedDate).First();
                     StudentManagmentModel.LastUpdatedDate = studentDetails.Select(x => x.LastUpdatedDate).First();
                     StudentManagmentModel.DeletedDate = studentDetails.Select(x => x.DeletedDate).First();
-
+                    StudentManagmentModel.AdmissionNumber = studentDetails.Select(x => x.AdmissionNumber).First();
+                    StudentManagmentModel.Courses = studentDetails.Select(x => x.Courses).First();
                     List<string> studentCourses = new List<string>();
                     foreach (var studItem in studentDetails)
                     {
@@ -93,7 +94,7 @@ namespace RomansGymManagement.Controllers
         [HttpGet]
         public HttpResponseMessage GetAllStudents(string name ="")
         {
-            var students = db.GetStudents().ToList();
+            var students = db.GetStudentsvOne().ToList();
             List<StudentManagementModel> StudentManagmentModelList = new List<StudentManagementModel>();
             if (students.Any())
             {
@@ -108,7 +109,10 @@ namespace RomansGymManagement.Controllers
                     StudentManagementModel.RegistrationFees = student.RegistrationFees;
                     StudentManagementModel.Sex = student.Sex;
                     StudentManagementModel.StudentID = student.StudentID;
+                    StudentManagementModel.AdmissionNumber = student.AdmissionNumber;
+                    StudentManagementModel.Courses = student.Courses;
                     StudentManagementModel.TuitionFees = student.TuitionFees;
+                    StudentManagementModel.ImageLocation = student.ImageLocation;                    
                     StudentManagmentModelList.Add(StudentManagementModel);
                 }
                 if (!string.IsNullOrEmpty(name))
@@ -154,30 +158,23 @@ namespace RomansGymManagement.Controllers
                         {
 
                             var message = string.Format("Please Upload image of type .jpg,.png.");
-
                             dict.Add("error", message);
                             return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
                         }
                         else if (postedFile.ContentLength > MaxContentLength)
                         {
-
                             var message = string.Format("Please Upload a file upto 5 mb.");
-
                             dict.Add("error", message);
                             return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
                         }
                         else
                         {
-
-
-
                             var filePath = HttpContext.Current.Server.MapPath("~/Userimage/" + id.ToString() + extension);
-
                             postedFile.SaveAs(filePath);
-
+                            string fileUrl = string.Format("http://www.romansgym.xyz/UserImage/{0}", id.ToString() + extension);
+                            db.UpdateImageLocation(id, fileUrl);
                         }
                     }
-
                     var message1 = string.Format("Image Updated Successfully.");
                     return Request.CreateErrorResponse(HttpStatusCode.Created, message1); ;
                 }
