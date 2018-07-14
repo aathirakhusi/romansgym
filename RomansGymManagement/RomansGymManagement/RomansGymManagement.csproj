@@ -100,6 +100,7 @@
     <Compile Include="Controllers\FireBaseController.cs" />
     <Compile Include="Controllers\RegistrationFeesController.cs" />
     <Compile Include="Controllers\StaffsController.cs" />
+    <Compile Include="Controllers\FeesManagementController.cs" />
     <Compile Include="Controllers\StudentManagementController.cs" />
     <Compile Include="Controllers\IncomeDetailsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -112,6 +113,12 @@
       <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ExpenseHeadDetail.cs">
+      <DependentUpon>RomansModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FeesPaidDetail.cs">
+      <DependentUpon>RomansModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetFeesDues_Result.cs">
       <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetStudentCoursevOne_Result.cs">
@@ -163,6 +170,7 @@
     <Compile Include="Models\StudentCourse.cs">
       <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FeesDuesModel.cs" />
     <Compile Include="Models\StudentManagementModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

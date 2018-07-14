@@ -35,6 +35,7 @@ namespace RomansGymManagement.Models
         public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<RegistrationFee> RegistrationFees { get; set; }
         public virtual DbSet<DeviceNotification> DeviceNotifications { get; set; }
+        public virtual DbSet<FeesPaidDetail> FeesPaidDetails { get; set; }
     
         public virtual ObjectResult<Nullable<int>> UpsertStudentCourse(Nullable<int> studentID, string name, Nullable<int> age, string sex, string parentName, string mobileNumber, string addres, Nullable<decimal> registrationFees, Nullable<decimal> tuitionFees, string imageLocation, Nullable<System.DateTime> createdDate, Nullable<System.DateTime> lastUpdatedDate, Nullable<System.DateTime> deletedDate, string courseXML)
         {
@@ -254,6 +255,11 @@ namespace RomansGymManagement.Models
                 new ObjectParameter("DeviceId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteDeviceNotification", deviceIdParameter);
+        }
+    
+        public virtual ObjectResult<GetFeesDues_Result> GetFeesDues()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetFeesDues_Result>("GetFeesDues");
         }
     }
 }

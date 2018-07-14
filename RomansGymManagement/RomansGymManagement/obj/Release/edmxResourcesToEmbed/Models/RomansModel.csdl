@@ -80,6 +80,8 @@
     <FunctionImport Name="DeleteDeviceNotification">
       <Parameter Name="DeviceId" Mode="In" Type="String" />
     </FunctionImport>
+    <EntitySet Name="FeesPaidDetails" EntityType="romansgy_gymModel.FeesPaidDetail" />
+    <FunctionImport Name="GetFeesDues" ReturnType="Collection(romansgy_gymModel.GetFeesDues_Result)" />
   </EntityContainer>
   <EntityType Name="IncomeDetail">
     <Key>
@@ -247,4 +249,26 @@
     <Property Name="DeviceId" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="FCMRegistrationID" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="FeesPaidDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentId" Type="Int32" Nullable="false" />
+    <Property Name="AmountPaidForDate" Type="DateTime" Precision="3" />
+    <Property Name="IsAttented" Type="Boolean" />
+  </EntityType>
+  <ComplexType Name="GetFeesDues_Result">
+    <Property Type="Int32" Name="StudentId" Nullable="false" />
+    <Property Type="DateTime" Name="FeesLastPaidDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="Age" Nullable="false" />
+    <Property Type="String" Name="Sex" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="ParentName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="MobileNumber" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Addres" Nullable="true" MaxLength="255" />
+    <Property Type="Decimal" Name="TuitionFees" Nullable="true" Precision="19" />
+    <Property Type="DateTime" Name="DeletedDate" Nullable="true" Precision="23" />
+  </ComplexType>
 </Schema>

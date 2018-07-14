@@ -26,6 +26,15 @@
     <Property Name="ExpenseDate" Type="datetime" Nullable="false" />
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="FeesPaidDetails">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentId" Type="int" Nullable="false" />
+    <Property Name="AmountPaidForDate" Type="datetime" />
+    <Property Name="IsAttented" Type="bit" />
+  </EntityType>
   <EntityType Name="IncomeDetails">
     <Key>
       <PropertyRef Name="ID" />
@@ -95,6 +104,7 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
     <Parameter Name="DeviceId" Type="varchar" Mode="In" />
   </Function>
   <Function Name="GetFCMIds" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db" />
+  <Function Name="GetFeesDues" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db" />
   <Function Name="GetStudentCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
     <Parameter Name="StudentID" Type="int" Mode="In" />
   </Function>
@@ -156,6 +166,7 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
     <EntitySet Name="Course" EntityType="Self.Course" Schema="romansgy_db" store:Type="Tables" />
     <EntitySet Name="DeviceNotification" EntityType="Self.DeviceNotification" Schema="romansgy_db" store:Type="Tables" />
     <EntitySet Name="ExpenseHeadDetails" EntityType="Self.ExpenseHeadDetails" Schema="romansgy_db" store:Type="Tables" />
+    <EntitySet Name="FeesPaidDetails" EntityType="Self.FeesPaidDetails" Schema="romansgy_db" store:Type="Tables" />
     <EntitySet Name="IncomeDetails" EntityType="Self.IncomeDetails" Schema="romansgy_db" store:Type="Tables" />
     <EntitySet Name="RegistrationFees" EntityType="Self.RegistrationFees" Schema="romansgy_db" store:Type="Tables" />
     <EntitySet Name="Staff" EntityType="Self.Staff" Schema="romansgy_db" store:Type="Tables" />
