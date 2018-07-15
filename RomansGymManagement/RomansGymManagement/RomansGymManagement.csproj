@@ -115,6 +115,7 @@
     <Compile Include="Models\ExpenseHeadDetail.cs">
       <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FeesPaymentModel.cs" />
     <Compile Include="Models\FeesPaidDetail.cs">
       <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>

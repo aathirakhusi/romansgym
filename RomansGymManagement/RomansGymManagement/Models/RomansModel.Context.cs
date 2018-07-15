@@ -279,5 +279,22 @@ namespace RomansGymManagement.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteStudentFeesPaidDetails", feesPaidDetailsIdParameter);
         }
+    
+        public virtual int InsertFeesPaidDetails(Nullable<int> studentId, Nullable<System.DateTime> amountPaidForDate, Nullable<bool> isAttented)
+        {
+            var studentIdParameter = studentId.HasValue ?
+                new ObjectParameter("studentId", studentId) :
+                new ObjectParameter("studentId", typeof(int));
+    
+            var amountPaidForDateParameter = amountPaidForDate.HasValue ?
+                new ObjectParameter("amountPaidForDate", amountPaidForDate) :
+                new ObjectParameter("amountPaidForDate", typeof(System.DateTime));
+    
+            var isAttentedParameter = isAttented.HasValue ?
+                new ObjectParameter("isAttented", isAttented) :
+                new ObjectParameter("isAttented", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertFeesPaidDetails", studentIdParameter, amountPaidForDateParameter, isAttentedParameter);
+        }
     }
 }

@@ -41,17 +41,17 @@ namespace RomansGymManagement.Controllers
                 fdm.Sex = feesDues.Sex;
                 fdm.StudentId = feesDues.StudentId;
                 fdm.TuitionFees = feesDues.TuitionFees;
-                
-                    var today = DateTime.Today; //
-                    var lastPaidDate = DateTime.Parse(feesDues.FeesLastPaidDate != null ? feesDues.FeesLastPaidDate.ToString() : feesDues.CreatedDate.ToString());
-                    var nextMonth = lastPaidDate.AddMonths(1);
-                    var caldate = ((today.Year - lastPaidDate.Year) * 12) + today.Month - lastPaidDate.Month;
-                    var months = MonthsBetween(nextMonth, today);
-                    var items = months.Select(i => i.Item1).ToList();
-                    if (caldate > 0)
-                    {
-                        fdm.PendingMonths = items;
-                    }
+
+                var today = DateTime.Today; //
+                var lastPaidDate = DateTime.Parse(feesDues.FeesLastPaidDate != null ? feesDues.FeesLastPaidDate.ToString() : feesDues.CreatedDate.ToString());
+                var nextMonth = lastPaidDate.AddMonths(1);
+                var caldate = ((today.Year - lastPaidDate.Year) * 12) + today.Month - lastPaidDate.Month;
+                var months = MonthsBetween(nextMonth, today);
+                var items = months.Select(i => i.Item1).ToList();
+                if (caldate > 0)
+                {
+                    fdm.PendingMonths = items;
+                }
                 studentsFeesDuesList.Add(fdm);
             }
             studentsFeesDuesList.RemoveAll(t => t.PendingMonths == null);
@@ -60,11 +60,11 @@ namespace RomansGymManagement.Controllers
             {
                 studentsFeesDuesList.Remove(itemToRemove);
             }*/
-           studentsFeesDuesList = studentsFeesDuesList.OrderByDescending(x => x.PendingMonths.Count).ToList();
+            studentsFeesDuesList = studentsFeesDuesList.OrderByDescending(x => x.PendingMonths.Count).ToList();
             return Request.CreateResponse(HttpStatusCode.OK, studentsFeesDuesList);
         }
 
-        // GET: api/Staff/Fees
+        // GET: api/Fees
         [ResponseType(typeof(GetUserLogin_Result))]
         [Route("api/Fees/{studentId}", Name = "GetStudentFeesPaidDetails")]
         public HttpResponseMessage GetStudentFeesPaidDetails(int studentId)
@@ -72,7 +72,7 @@ namespace RomansGymManagement.Controllers
             var feesPaid = db.GetStudentFeesPaidDetails(studentId).ToList();
             if (feesPaid.Any())
             {
-               // List<GetStudentFeesPaidDetails_Result> studentFeesPaisdList= new  List<GetStudentFeesPaidDetails_Result>();
+                // List<GetStudentFeesPaidDetails_Result> studentFeesPaisdList= new  List<GetStudentFeesPaidDetails_Result>();
                 return Request.CreateResponse(HttpStatusCode.OK, feesPaid);
             }
             else
@@ -90,13 +90,34 @@ namespace RomansGymManagement.Controllers
             if (feesDeleted == 1)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, feesDeleted);
-            }else
+            }
+            else
             {
                 return Request.CreateResponse(HttpStatusCode.NoContent);
             }
         }
 
-        private static IEnumerable<Tuple<string, int>> MonthsBetween( DateTime startDate,  DateTime endDate)
+
+        // POST: api/Notification
+        [ResponseType(typeof(FeesPaymentModel))]
+        [Route("api/Fees", Name = "InsertFeesPaidDetails")]
+        [HttpPost]
+        public IHttpActionResult PostStudentFeesPaidDetails(FeesPaymentModel feesPaymentModel)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            foreach (var item in feesPaymentModel.AmountPaidForDate)
+            {
+                var result = db.InsertFeesPaidDetails(feesPaymentModel.StudentId, item, feesPaymentModel.IsAttented);
+            }
+
+            return CreatedAtRoute("InsertFeesPaidDetails", new { id = feesPaymentModel.StudentId }, feesPaymentModel);
+        }
+
+        private static IEnumerable<Tuple<string, int>> MonthsBetween(DateTime startDate, DateTime endDate)
         {
             DateTime iterator;
             DateTime limit;
@@ -123,5 +144,5 @@ namespace RomansGymManagement.Controllers
         }
 
     }
-            
+
 }

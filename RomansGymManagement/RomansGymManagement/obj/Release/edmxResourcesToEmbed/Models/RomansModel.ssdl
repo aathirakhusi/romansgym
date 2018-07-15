@@ -123,6 +123,11 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
     <Parameter Name="userName" Type="varchar" Mode="In" />
     <Parameter Name="password" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="InsertFeesPaidDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="studentId" Type="int" Mode="In" />
+    <Parameter Name="amountPaidForDate" Type="datetime" Mode="In" />
+    <Parameter Name="isAttented" Type="bit" Mode="In" />
+  </Function>
   <Function Name="UpdateImageLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
     <Parameter Name="StudentId" Type="int" Mode="In" />
     <Parameter Name="ImageLocation" Type="varchar" Mode="In" />

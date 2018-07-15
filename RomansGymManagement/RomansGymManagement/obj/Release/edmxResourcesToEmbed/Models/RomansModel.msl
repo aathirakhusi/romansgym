@@ -225,5 +225,6 @@
       </ResultMapping>
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="DeleteStudentFeesPaidDetails" FunctionName="romansgy_gymModel.Store.DeleteStudentFeesPaidDetails" />
+    <FunctionImportMapping FunctionImportName="InsertFeesPaidDetails" FunctionName="romansgy_gymModel.Store.InsertFeesPaidDetails" />
   </EntityContainerMapping>
 </Mapping>

@@ -33,7 +33,10 @@ namespace RomansGymManagement.Controllers
             if(StudentDetails.StudentID == null)
             {
                 var dateAndTime = DateTime.Now;
-                StudentDetails.CreatedDate = dateAndTime.Date;
+                if (StudentDetails.CreatedDate == null)
+                {
+                    StudentDetails.CreatedDate = dateAndTime.Date;
+                }
                 StudentDetails.LastUpdatedDate = dateAndTime.Date;
             }
             else
