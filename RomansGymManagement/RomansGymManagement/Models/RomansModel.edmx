@@ -79,7 +79,7 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.Student' does not have a 
             <PropertyRef Name="AdmissionNumber" />
             <PropertyRef Name="Courses" />
           </Key>
-          <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Age" Type="int" Nullable="false" />
           <Property Name="Sex" Type="varchar" MaxLength="20" />
@@ -89,9 +89,9 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.Student' does not have a 
           <Property Name="RegistrationFees" Type="money" />
           <Property Name="TuitionFees" Type="money" />
           <Property Name="ImageLocation" Type="varchar" MaxLength="255" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
-          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="DeletedDate" Type="smalldatetime" />
           <Property Name="AdmissionNumber" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Courses" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
@@ -108,6 +108,9 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
         <Function Name="DeleteDeviceNotification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
           <Parameter Name="DeviceId" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="DeleteStudentFeesPaidDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+          <Parameter Name="feesPaidDetailsId" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetFCMIds" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db" />
         <Function Name="GetFeesDues" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db" />
         <Function Name="GetStudentCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
@@ -115,6 +118,9 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
         </Function>
         <Function Name="GetStudentCoursevOne" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
           <Parameter Name="StudentID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetStudentFeesPaidDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+          <Parameter Name="studentId" Type="int" Mode="In" />
         </Function>
         <Function Name="GetStudents" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db" />
         <Function Name="GetStudentsvOne" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db" />
@@ -287,6 +293,12 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
           </FunctionImport>
           <EntitySet Name="FeesPaidDetails" EntityType="romansgy_gymModel.FeesPaidDetail" />
           <FunctionImport Name="GetFeesDues" ReturnType="Collection(romansgy_gymModel.GetFeesDues_Result)" />
+          <FunctionImport Name="GetStudentFeesPaidDetails" ReturnType="Collection(romansgy_gymModel.GetStudentFeesPaidDetails_Result)">
+          <Parameter Name="studentId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteStudentFeesPaidDetails">
+            <Parameter Name="feesPaidDetailsId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="IncomeDetail">
           <Key>
@@ -319,9 +331,9 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
           <Property Name="RegistrationFees" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="TuitionFees" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="ImageLocation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="0" />
           <Property Name="AdmissionNumber" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Courses" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
@@ -475,6 +487,12 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
           <Property Type="String" Name="Addres" Nullable="true" MaxLength="255" />
           <Property Type="Decimal" Name="TuitionFees" Nullable="true" Precision="19" />
           <Property Type="DateTime" Name="DeletedDate" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetStudentFeesPaidDetails_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="StudentId" Nullable="false" />
+          <Property Type="DateTime" Name="AmountPaidForDate" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="IsAttented" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -695,6 +713,17 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetStudentFeesPaidDetails" FunctionName="romansgy_gymModel.Store.GetStudentFeesPaidDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="romansgy_gymModel.GetStudentFeesPaidDetails_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="AmountPaidForDate" ColumnName="AmountPaidForDate" />
+                <ScalarProperty Name="IsAttented" ColumnName="IsAttented" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DeleteStudentFeesPaidDetails" FunctionName="romansgy_gymModel.Store.DeleteStudentFeesPaidDetails" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -214,5 +214,16 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetStudentFeesPaidDetails" FunctionName="romansgy_gymModel.Store.GetStudentFeesPaidDetails">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="romansgy_gymModel.GetStudentFeesPaidDetails_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+          <ScalarProperty Name="AmountPaidForDate" ColumnName="AmountPaidForDate" />
+          <ScalarProperty Name="IsAttented" ColumnName="IsAttented" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DeleteStudentFeesPaidDetails" FunctionName="romansgy_gymModel.Store.DeleteStudentFeesPaidDetails" />
   </EntityContainerMapping>
 </Mapping>

@@ -74,7 +74,7 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.Student' does not have a 
       <PropertyRef Name="AdmissionNumber" />
       <PropertyRef Name="Courses" />
     </Key>
-    <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Age" Type="int" Nullable="false" />
     <Property Name="Sex" Type="varchar" MaxLength="20" />
@@ -84,9 +84,9 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.Student' does not have a 
     <Property Name="RegistrationFees" Type="money" />
     <Property Name="TuitionFees" Type="money" />
     <Property Name="ImageLocation" Type="varchar" MaxLength="255" />
-    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-    <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
-    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="LastUpdatedDate" Type="smalldatetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="smalldatetime" />
     <Property Name="AdmissionNumber" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="Courses" Type="varchar" MaxLength="255" Nullable="false" />
   </EntityType>
@@ -103,6 +103,9 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
   <Function Name="DeleteDeviceNotification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
     <Parameter Name="DeviceId" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="DeleteStudentFeesPaidDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="feesPaidDetailsId" Type="int" Mode="In" />
+  </Function>
   <Function Name="GetFCMIds" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db" />
   <Function Name="GetFeesDues" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db" />
   <Function Name="GetStudentCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
@@ -110,6 +113,9 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
   </Function>
   <Function Name="GetStudentCoursevOne" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
     <Parameter Name="StudentID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetStudentFeesPaidDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="studentId" Type="int" Mode="In" />
   </Function>
   <Function Name="GetStudents" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db" />
   <Function Name="GetStudentsvOne" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db" />
