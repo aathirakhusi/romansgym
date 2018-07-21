@@ -103,20 +103,21 @@ namespace RomansGymManagement.Controllers
             {
                 foreach (var student in students)
                 {
-                    StudentManagementModel StudentManagementModel = new StudentManagementModel();
-                    StudentManagementModel.Addres = student.Addres;
-                    StudentManagementModel.Age = student.Age;
-                    StudentManagementModel.MobileNumber = student.MobileNumber;
-                    StudentManagementModel.Name = student.Name;
-                    StudentManagementModel.ParentName = student.ParentName;
-                    StudentManagementModel.RegistrationFees = student.RegistrationFees;
-                    StudentManagementModel.Sex = student.Sex;
-                    StudentManagementModel.StudentID = student.StudentID;
-                    StudentManagementModel.AdmissionNumber = student.AdmissionNumber;
-                    StudentManagementModel.Courses = student.Courses;
-                    StudentManagementModel.TuitionFees = student.TuitionFees;
-                    StudentManagementModel.ImageLocation = student.ImageLocation;                    
-                    StudentManagmentModelList.Add(StudentManagementModel);
+                    StudentManagementModel studentManagementModel = new StudentManagementModel();
+                    studentManagementModel.Addres = student.Addres;
+                    studentManagementModel.Age = student.Age;
+                    studentManagementModel.MobileNumber = student.MobileNumber;
+                    studentManagementModel.Name = student.Name;
+                    studentManagementModel.ParentName = student.ParentName;
+                    studentManagementModel.RegistrationFees = student.RegistrationFees;
+                    studentManagementModel.Sex = student.Sex;
+                    studentManagementModel.StudentID = student.StudentID;
+                    studentManagementModel.AdmissionNumber = student.AdmissionNumber;
+                    studentManagementModel.CreatedDate = student.CreatedDate;
+                    studentManagementModel.Courses = student.Courses;
+                    studentManagementModel.TuitionFees = student.TuitionFees;
+                    studentManagementModel.ImageLocation = student.ImageLocation;
+                    StudentManagmentModelList.Add(studentManagementModel);
                 }
                 if (!string.IsNullOrEmpty(name))
                 {

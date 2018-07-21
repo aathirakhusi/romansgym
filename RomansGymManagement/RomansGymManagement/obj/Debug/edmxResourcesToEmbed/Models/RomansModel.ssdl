@@ -1,5 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="romansgy_gymModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Course">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CourseName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Amount" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DeviceNotification">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DeviceId" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="FCMRegistrationID" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
   <EntityType Name="ExpenseHeadDetails">
     <Key>
       <PropertyRef Name="ID" />
@@ -10,7 +26,185 @@
     <Property Name="ExpenseDate" Type="datetime" Nullable="false" />
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="FeesPaidDetails">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentId" Type="int" Nullable="false" />
+    <Property Name="AmountPaidForDate" Type="datetime" />
+    <Property Name="IsAttented" Type="bit" />
+  </EntityType>
+  <EntityType Name="IncomeDetails">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IncomeHead" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Amount" Type="int" Nullable="false" />
+    <Property Name="IncomeDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RegistrationFees">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Amount" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Staff">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="32" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'romansgy_gym.romansgy_db.Student' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="StudentID" />
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="Age" />
+      <PropertyRef Name="MobileNumber" />
+      <PropertyRef Name="CreatedDate" />
+      <PropertyRef Name="LastUpdatedDate" />
+      <PropertyRef Name="AdmissionNumber" />
+      <PropertyRef Name="Courses" />
+    </Key>
+    <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Sex" Type="varchar" MaxLength="20" />
+    <Property Name="ParentName" Type="varchar" MaxLength="50" />
+    <Property Name="MobileNumber" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Addres" Type="varchar" MaxLength="255" />
+    <Property Name="RegistrationFees" Type="money" />
+    <Property Name="TuitionFees" Type="money" />
+    <Property Name="ImageLocation" Type="varchar" MaxLength="255" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="AdmissionNumber" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Courses" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="StudentCourse">
+    <Key>
+      <PropertyRef Name="StudentID" />
+      <PropertyRef Name="CourseName" />
+    </Key>
+    <Property Name="StudentID" Type="int" Nullable="false" />
+    <Property Name="CourseName" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <Function Name="DeleteDeviceNotification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="DeviceId" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="DeleteStudentFeesPaidDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="feesPaidDetailsId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetFCMIds" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db" />
+  <Function Name="GetFeesDues" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db" />
+  <Function Name="GetStudentCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="StudentID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetStudentCoursevOne" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="StudentID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetStudentFeesPaidDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="studentId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetStudents" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db" />
+  <Function Name="GetStudentsvOne" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db" />
+  <Function Name="GetUserLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="userName" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="InsertFeesPaidDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="studentId" Type="int" Mode="In" />
+    <Parameter Name="amountPaidForDate" Type="datetime" Mode="In" />
+    <Parameter Name="isAttented" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="UpdateImageLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="StudentId" Type="int" Mode="In" />
+    <Parameter Name="ImageLocation" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="UpsertDeviceNotification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="DeviceId" Type="varchar" Mode="In" />
+    <Parameter Name="FCMRegistrationID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="UpsertRegistrationFees" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="RegistrationAmount" Type="money" Mode="In" />
+  </Function>
+  <Function Name="UpsertStudentCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="StudentID" Type="int" Mode="In" />
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="Age" Type="int" Mode="In" />
+    <Parameter Name="Sex" Type="varchar" Mode="In" />
+    <Parameter Name="ParentName" Type="varchar" Mode="In" />
+    <Parameter Name="MobileNumber" Type="varchar" Mode="In" />
+    <Parameter Name="Addres" Type="varchar" Mode="In" />
+    <Parameter Name="RegistrationFees" Type="money" Mode="In" />
+    <Parameter Name="TuitionFees" Type="money" Mode="In" />
+    <Parameter Name="ImageLocation" Type="varchar" Mode="In" />
+    <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+    <Parameter Name="LastUpdatedDate" Type="datetime" Mode="In" />
+    <Parameter Name="DeletedDate" Type="datetime" Mode="In" />
+    <Parameter Name="CourseXML" Type="xml" Mode="In" />
+  </Function>
+  <Function Name="UpsertStudentCoursevOne" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="StudentID" Type="int" Mode="In" />
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="Age" Type="int" Mode="In" />
+    <Parameter Name="Sex" Type="varchar" Mode="In" />
+    <Parameter Name="ParentName" Type="varchar" Mode="In" />
+    <Parameter Name="MobileNumber" Type="varchar" Mode="In" />
+    <Parameter Name="Addres" Type="varchar" Mode="In" />
+    <Parameter Name="RegistrationFees" Type="money" Mode="In" />
+    <Parameter Name="TuitionFees" Type="money" Mode="In" />
+    <Parameter Name="ImageLocation" Type="varchar" Mode="In" />
+    <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+    <Parameter Name="LastUpdatedDate" Type="datetime" Mode="In" />
+    <Parameter Name="DeletedDate" Type="datetime" Mode="In" />
+    <Parameter Name="AdmissionNumber" Type="varchar" Mode="In" />
+    <Parameter Name="Courses" Type="varchar" Mode="In" />
+    <Parameter Name="CourseXML" Type="xml" Mode="In" />
+  </Function>
   <EntityContainer Name="romansgy_gymModelStoreContainer">
+    <EntitySet Name="Course" EntityType="Self.Course" Schema="romansgy_db" store:Type="Tables" />
+    <EntitySet Name="DeviceNotification" EntityType="Self.DeviceNotification" Schema="romansgy_db" store:Type="Tables" />
     <EntitySet Name="ExpenseHeadDetails" EntityType="Self.ExpenseHeadDetails" Schema="romansgy_db" store:Type="Tables" />
+    <EntitySet Name="FeesPaidDetails" EntityType="Self.FeesPaidDetails" Schema="romansgy_db" store:Type="Tables" />
+    <EntitySet Name="IncomeDetails" EntityType="Self.IncomeDetails" Schema="romansgy_db" store:Type="Tables" />
+    <EntitySet Name="RegistrationFees" EntityType="Self.RegistrationFees" Schema="romansgy_db" store:Type="Tables" />
+    <EntitySet Name="Staff" EntityType="Self.Staff" Schema="romansgy_db" store:Type="Tables" />
+    <EntitySet Name="Student" EntityType="Self.Student" store:Type="Tables" store:Schema="romansgy_db">
+      <DefiningQuery>SELECT 
+    [Student].[StudentID] AS [StudentID], 
+    [Student].[Name] AS [Name], 
+    [Student].[Age] AS [Age], 
+    [Student].[Sex] AS [Sex], 
+    [Student].[ParentName] AS [ParentName], 
+    [Student].[MobileNumber] AS [MobileNumber], 
+    [Student].[Addres] AS [Addres], 
+    [Student].[RegistrationFees] AS [RegistrationFees], 
+    [Student].[TuitionFees] AS [TuitionFees], 
+    [Student].[ImageLocation] AS [ImageLocation], 
+    [Student].[CreatedDate] AS [CreatedDate], 
+    [Student].[LastUpdatedDate] AS [LastUpdatedDate], 
+    [Student].[DeletedDate] AS [DeletedDate], 
+    [Student].[AdmissionNumber] AS [AdmissionNumber], 
+    [Student].[Courses] AS [Courses]
+    FROM [romansgy_db].[Student] AS [Student]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="StudentCourse" EntityType="Self.StudentCourse" store:Type="Tables" store:Schema="romansgy_db">
+      <DefiningQuery>SELECT 
+    [StudentCourse].[StudentID] AS [StudentID], 
+    [StudentCourse].[CourseName] AS [CourseName]
+    FROM [romansgy_db].[StudentCourse] AS [StudentCourse]</DefiningQuery>
+    </EntitySet>
   </EntityContainer>
 </Schema>

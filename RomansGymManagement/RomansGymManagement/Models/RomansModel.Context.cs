@@ -257,11 +257,6 @@ namespace RomansGymManagement.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteDeviceNotification", deviceIdParameter);
         }
     
-        public virtual ObjectResult<GetFeesDues_Result> GetFeesDues()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetFeesDues_Result>("GetFeesDues");
-        }
-    
         public virtual ObjectResult<GetStudentFeesPaidDetails_Result> GetStudentFeesPaidDetails(Nullable<int> studentId)
         {
             var studentIdParameter = studentId.HasValue ?
@@ -295,6 +290,11 @@ namespace RomansGymManagement.Models
                 new ObjectParameter("isAttented", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertFeesPaidDetails", studentIdParameter, amountPaidForDateParameter, isAttentedParameter);
+        }
+    
+        public virtual ObjectResult<GetFeesDues_Result> GetFeesDues()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetFeesDues_Result>("GetFeesDues");
         }
     }
 }

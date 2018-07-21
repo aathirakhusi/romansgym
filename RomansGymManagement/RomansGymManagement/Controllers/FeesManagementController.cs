@@ -41,13 +41,20 @@ namespace RomansGymManagement.Controllers
                 fdm.Sex = feesDues.Sex;
                 fdm.StudentId = feesDues.StudentId;
                 fdm.TuitionFees = feesDues.TuitionFees;
+                fdm.ImageLocation = feesDues.ImageLocation;
 
                 var today = DateTime.Today; //
                 var lastPaidDate = DateTime.Parse(feesDues.FeesLastPaidDate != null ? feesDues.FeesLastPaidDate.ToString() : feesDues.CreatedDate.ToString());
                 var nextMonth = lastPaidDate.AddMonths(1);
                 var caldate = ((today.Year - lastPaidDate.Year) * 12) + today.Month - lastPaidDate.Month;
                 var months = MonthsBetween(nextMonth, today);
-                var items = months.Select(i => i.Item1).ToList();
+               // var items = months.Select(i => i.Item1).ToList();
+                var items = months.Select(i => new { i.Item1,i.Item2,i.Item3}).AsEnumerable().Select(c=> new Tuple<string,int,DateTime>(c.Item1,c.Item2,c.Item3)).ToList();
+               /* codes = codesRepo.SearchFor(predicate)
+    .Select(c => new { c.Id, c.Flag })
+    .AsEnumerable()
+    .Select(c => new Tuple<string, byte>(c.Id, c.Flag))
+    .ToList();*/
                 if (caldate > 0)
                 {
                     fdm.PendingMonths = items;
@@ -117,7 +124,7 @@ namespace RomansGymManagement.Controllers
             return CreatedAtRoute("InsertFeesPaidDetails", new { id = feesPaymentModel.StudentId }, feesPaymentModel);
         }
 
-        private static IEnumerable<Tuple<string, int>> MonthsBetween(DateTime startDate, DateTime endDate)
+        private static IEnumerable<Tuple<string, int, DateTime>> MonthsBetween(DateTime startDate, DateTime endDate)
         {
             DateTime iterator;
             DateTime limit;
@@ -138,7 +145,7 @@ namespace RomansGymManagement.Controllers
             {
                 yield return Tuple.Create(
                     dateTimeFormat.GetMonthName(iterator.Month),
-                    iterator.Year);
+                    iterator.Year,iterator.Date);
                 iterator = iterator.AddMonths(1);
             }
         }

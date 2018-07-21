@@ -12,5 +12,281 @@
   </EntityType>
   <EntityContainer Name="romansgy_gymEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="ExpenseHeadDetails" EntityType="Self.ExpenseHeadDetail" />
+    <EntitySet Name="IncomeDetails" EntityType="romansgy_gymModel.IncomeDetail" />
+    <EntitySet Name="Students" EntityType="romansgy_gymModel.Student" />
+    <EntitySet Name="StudentCourses" EntityType="romansgy_gymModel.StudentCourse" />
+    <FunctionImport Name="UpsertStudentCourse" ReturnType="Collection(Int32)">
+      <Parameter Name="StudentID" Mode="In" Type="Int32" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Age" Mode="In" Type="Int32" />
+      <Parameter Name="Sex" Mode="In" Type="String" />
+      <Parameter Name="ParentName" Mode="In" Type="String" />
+      <Parameter Name="MobileNumber" Mode="In" Type="String" />
+      <Parameter Name="Addres" Mode="In" Type="String" />
+      <Parameter Name="RegistrationFees" Mode="In" Type="Decimal" />
+      <Parameter Name="TuitionFees" Mode="In" Type="Decimal" />
+      <Parameter Name="ImageLocation" Mode="In" Type="String" />
+      <Parameter Name="CreatedDate" Mode="In" Type="DateTime" />
+      <Parameter Name="LastUpdatedDate" Mode="In" Type="DateTime" />
+      <Parameter Name="DeletedDate" Mode="In" Type="DateTime" />
+      <Parameter Name="CourseXML" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetStudentCourse" ReturnType="Collection(romansgy_gymModel.GetStudentCourse_Result1)">
+      <Parameter Name="StudentID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="Courses" EntityType="romansgy_gymModel.Course" />
+    <EntitySet Name="Staffs" EntityType="romansgy_gymModel.Staff" />
+    <EntitySet Name="RegistrationFees" EntityType="romansgy_gymModel.RegistrationFee" />
+    <FunctionImport Name="UpsertRegistrationFees">
+      <Parameter Name="RegistrationAmount" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="GetUserLogin" ReturnType="Collection(romansgy_gymModel.GetUserLogin_Result)">
+      <Parameter Name="userName" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetStudents" ReturnType="Collection(romansgy_gymModel.GetStudents_Result)" />
+    <FunctionImport Name="UpsertStudentCoursevOne" ReturnType="Collection(Int32)">
+      <Parameter Name="StudentID" Mode="In" Type="Int32" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Age" Mode="In" Type="Int32" />
+      <Parameter Name="Sex" Mode="In" Type="String" />
+      <Parameter Name="ParentName" Mode="In" Type="String" />
+      <Parameter Name="MobileNumber" Mode="In" Type="String" />
+      <Parameter Name="Addres" Mode="In" Type="String" />
+      <Parameter Name="RegistrationFees" Mode="In" Type="Decimal" />
+      <Parameter Name="TuitionFees" Mode="In" Type="Decimal" />
+      <Parameter Name="ImageLocation" Mode="In" Type="String" />
+      <Parameter Name="CreatedDate" Mode="In" Type="DateTime" />
+      <Parameter Name="LastUpdatedDate" Mode="In" Type="DateTime" />
+      <Parameter Name="DeletedDate" Mode="In" Type="DateTime" />
+      <Parameter Name="AdmissionNumber" Mode="In" Type="String" />
+      <Parameter Name="Courses" Mode="In" Type="String" />
+      <Parameter Name="CourseXML" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetStudentCoursevOne" ReturnType="Collection(romansgy_gymModel.GetStudentCoursevOne_Result)">
+      <Parameter Name="StudentID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetStudentsvOne" ReturnType="Collection(romansgy_gymModel.GetStudentsvOne_Result)" />
+    <FunctionImport Name="UpdateImageLocation">
+      <Parameter Name="StudentId" Mode="In" Type="Int32" />
+      <Parameter Name="ImageLocation" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="DeviceNotifications" EntityType="romansgy_gymModel.DeviceNotification" />
+    <FunctionImport Name="UpsertDeviceNotification">
+      <Parameter Name="DeviceId" Mode="In" Type="String" />
+      <Parameter Name="FCMRegistrationID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetFCMIds" ReturnType="Collection(String)" />
+    <FunctionImport Name="DeleteDeviceNotification">
+      <Parameter Name="DeviceId" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="FeesPaidDetails" EntityType="romansgy_gymModel.FeesPaidDetail" />
+    <FunctionImport Name="GetStudentFeesPaidDetails" ReturnType="Collection(romansgy_gymModel.GetStudentFeesPaidDetails_Result)">
+      <Parameter Name="studentId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteStudentFeesPaidDetails">
+      <Parameter Name="feesPaidDetailsId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="InsertFeesPaidDetails">
+      <Parameter Name="studentId" Mode="In" Type="Int32" />
+      <Parameter Name="amountPaidForDate" Mode="In" Type="DateTime" />
+      <Parameter Name="isAttented" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="GetFeesDues" ReturnType="Collection(romansgy_gymModel.GetFeesDues_Result)" />
   </EntityContainer>
+  <EntityType Name="IncomeDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IncomeHead" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Amount" Type="Int32" Nullable="false" />
+    <Property Name="IncomeDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="StudentID" />
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="Age" />
+      <PropertyRef Name="MobileNumber" />
+      <PropertyRef Name="CreatedDate" />
+      <PropertyRef Name="LastUpdatedDate" />
+      <PropertyRef Name="AdmissionNumber" />
+      <PropertyRef Name="Courses" />
+    </Key>
+    <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Age" Type="Int32" Nullable="false" />
+    <Property Name="Sex" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ParentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MobileNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Addres" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="RegistrationFees" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="TuitionFees" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="ImageLocation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="AdmissionNumber" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Courses" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="StudentCourse">
+    <Key>
+      <PropertyRef Name="StudentID" />
+      <PropertyRef Name="CourseName" />
+    </Key>
+    <Property Name="StudentID" Type="Int32" Nullable="false" />
+    <Property Name="CourseName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <ComplexType Name="GetStudentCourse_Result">
+    <Property Type="Int32" Name="StudentID" Nullable="false" />
+    <Property Type="String" Name="CourseName" Nullable="false" MaxLength="255" />
+    <Property Type="Int32" Name="StudentID1" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="Age" Nullable="false" />
+    <Property Type="String" Name="Sex" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="ParentName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="MobileNumber" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Addres" Nullable="true" MaxLength="255" />
+    <Property Type="Decimal" Name="RegistrationFees" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="TuitionFees" Nullable="true" Precision="19" />
+    <Property Type="String" Name="ImageLocation" Nullable="true" MaxLength="255" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="LastUpdatedDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="DeletedDate" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="GetStudentCourse_Result1">
+    <Property Type="Int32" Name="StudentID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="Age" Nullable="false" />
+    <Property Type="String" Name="Sex" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="ParentName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="MobileNumber" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Addres" Nullable="true" MaxLength="255" />
+    <Property Type="Decimal" Name="RegistrationFees" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="TuitionFees" Nullable="true" Precision="19" />
+    <Property Type="String" Name="ImageLocation" Nullable="true" MaxLength="255" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="LastUpdatedDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="DeletedDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="CourseName" Nullable="false" MaxLength="255" />
+  </ComplexType>
+  <EntityType Name="Course">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CourseName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Amount" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Staff">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="RegistrationFee">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+  </EntityType>
+  <ComplexType Name="GetUserLogin_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="UserName" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Password" Nullable="false" MaxLength="32" />
+  </ComplexType>
+  <ComplexType Name="GetStudents_Result">
+    <Property Type="Int32" Name="StudentID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="Age" Nullable="false" />
+    <Property Type="String" Name="Sex" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="ParentName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="MobileNumber" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Addres" Nullable="true" MaxLength="255" />
+    <Property Type="Decimal" Name="RegistrationFees" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="TuitionFees" Nullable="true" Precision="19" />
+    <Property Type="String" Name="ImageLocation" Nullable="true" MaxLength="255" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="LastUpdatedDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="DeletedDate" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="GetStudentCoursevOne_Result">
+    <Property Type="Int32" Name="StudentID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="Age" Nullable="false" />
+    <Property Type="String" Name="Sex" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="ParentName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="MobileNumber" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Addres" Nullable="true" MaxLength="255" />
+    <Property Type="Decimal" Name="RegistrationFees" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="TuitionFees" Nullable="true" Precision="19" />
+    <Property Type="String" Name="ImageLocation" Nullable="true" MaxLength="255" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="LastUpdatedDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="DeletedDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="AdmissionNumber" Nullable="false" MaxLength="255" />
+    <Property Type="String" Name="Courses" Nullable="false" MaxLength="255" />
+    <Property Type="String" Name="CourseName" Nullable="false" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="GetStudentsvOne_Result">
+    <Property Type="Int32" Name="StudentID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="Age" Nullable="false" />
+    <Property Type="String" Name="Sex" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="ParentName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="MobileNumber" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Addres" Nullable="true" MaxLength="255" />
+    <Property Type="Decimal" Name="RegistrationFees" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="TuitionFees" Nullable="true" Precision="19" />
+    <Property Type="String" Name="ImageLocation" Nullable="true" MaxLength="255" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="LastUpdatedDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="DeletedDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="AdmissionNumber" Nullable="false" MaxLength="255" />
+    <Property Type="String" Name="Courses" Nullable="false" MaxLength="255" />
+  </ComplexType>
+  <EntityType Name="DeviceNotification">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DeviceId" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="FCMRegistrationID" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="FeesPaidDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentId" Type="Int32" Nullable="false" />
+    <Property Name="AmountPaidForDate" Type="DateTime" Precision="3" />
+    <Property Name="IsAttented" Type="Boolean" />
+  </EntityType>
+  <ComplexType Name="GetStudentFeesPaidDetails_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="Int32" Name="StudentId" Nullable="false" />
+    <Property Type="DateTime" Name="AmountPaidForDate" Nullable="true" Precision="23" />
+    <Property Type="Boolean" Name="IsAttented" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GetFeesDues_Result">
+    <Property Type="Int32" Name="StudentId" Nullable="false" />
+    <Property Type="DateTime" Name="FeesLastPaidDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="Age" Nullable="false" />
+    <Property Type="String" Name="Sex" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="ParentName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="MobileNumber" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Addres" Nullable="true" MaxLength="255" />
+    <Property Type="Decimal" Name="TuitionFees" Nullable="true" Precision="19" />
+    <Property Type="DateTime" Name="DeletedDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="ImageLocation" Nullable="true" MaxLength="255" />
+  </ComplexType>
 </Schema>

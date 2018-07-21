@@ -197,6 +197,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetStudentFeesPaidDetails" FunctionName="romansgy_gymModel.Store.GetStudentFeesPaidDetails">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="romansgy_gymModel.GetStudentFeesPaidDetails_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+          <ScalarProperty Name="AmountPaidForDate" ColumnName="AmountPaidForDate" />
+          <ScalarProperty Name="IsAttented" ColumnName="IsAttented" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DeleteStudentFeesPaidDetails" FunctionName="romansgy_gymModel.Store.DeleteStudentFeesPaidDetails" />
+    <FunctionImportMapping FunctionImportName="InsertFeesPaidDetails" FunctionName="romansgy_gymModel.Store.InsertFeesPaidDetails" />
     <FunctionImportMapping FunctionImportName="GetFeesDues" FunctionName="romansgy_gymModel.Store.GetFeesDues">
       <ResultMapping>
         <ComplexTypeMapping TypeName="romansgy_gymModel.GetFeesDues_Result">
@@ -211,20 +223,9 @@
           <ScalarProperty Name="Addres" ColumnName="Addres" />
           <ScalarProperty Name="TuitionFees" ColumnName="TuitionFees" />
           <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+          <ScalarProperty Name="ImageLocation" ColumnName="ImageLocation" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="GetStudentFeesPaidDetails" FunctionName="romansgy_gymModel.Store.GetStudentFeesPaidDetails">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="romansgy_gymModel.GetStudentFeesPaidDetails_Result">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-          <ScalarProperty Name="AmountPaidForDate" ColumnName="AmountPaidForDate" />
-          <ScalarProperty Name="IsAttented" ColumnName="IsAttented" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="DeleteStudentFeesPaidDetails" FunctionName="romansgy_gymModel.Store.DeleteStudentFeesPaidDetails" />
-    <FunctionImportMapping FunctionImportName="InsertFeesPaidDetails" FunctionName="romansgy_gymModel.Store.InsertFeesPaidDetails" />
   </EntityContainerMapping>
 </Mapping>

@@ -79,7 +79,7 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.Student' does not have a 
             <PropertyRef Name="AdmissionNumber" />
             <PropertyRef Name="Courses" />
           </Key>
-          <Property Name="StudentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Age" Type="int" Nullable="false" />
           <Property Name="Sex" Type="varchar" MaxLength="20" />
@@ -89,9 +89,9 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.Student' does not have a 
           <Property Name="RegistrationFees" Type="money" />
           <Property Name="TuitionFees" Type="money" />
           <Property Name="ImageLocation" Type="varchar" MaxLength="255" />
-          <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
-          <Property Name="LastUpdatedDate" Type="smalldatetime" Nullable="false" />
-          <Property Name="DeletedDate" Type="smalldatetime" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="DeletedDate" Type="datetime" />
           <Property Name="AdmissionNumber" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Courses" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
@@ -297,7 +297,6 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
           <Parameter Name="DeviceId" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="FeesPaidDetails" EntityType="romansgy_gymModel.FeesPaidDetail" />
-          <FunctionImport Name="GetFeesDues" ReturnType="Collection(romansgy_gymModel.GetFeesDues_Result)" />
           <FunctionImport Name="GetStudentFeesPaidDetails" ReturnType="Collection(romansgy_gymModel.GetStudentFeesPaidDetails_Result)">
           <Parameter Name="studentId" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -309,6 +308,7 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
             <Parameter Name="amountPaidForDate" Mode="In" Type="DateTime" />
             <Parameter Name="isAttented" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="GetFeesDues" ReturnType="Collection(romansgy_gymModel.GetFeesDues_Result)" />
         </EntityContainer>
         <EntityType Name="IncomeDetail">
           <Key>
@@ -341,9 +341,9 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
           <Property Name="RegistrationFees" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="TuitionFees" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="ImageLocation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="DeletedDate" Type="DateTime" Precision="0" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
           <Property Name="AdmissionNumber" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Courses" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
@@ -485,6 +485,12 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
           <Property Name="AmountPaidForDate" Type="DateTime" Precision="3" />
           <Property Name="IsAttented" Type="Boolean" />
         </EntityType>
+        <ComplexType Name="GetStudentFeesPaidDetails_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="StudentId" Nullable="false" />
+          <Property Type="DateTime" Name="AmountPaidForDate" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="IsAttented" Nullable="true" />
+        </ComplexType>
         <ComplexType Name="GetFeesDues_Result">
           <Property Type="Int32" Name="StudentId" Nullable="false" />
           <Property Type="DateTime" Name="FeesLastPaidDate" Nullable="true" Precision="23" />
@@ -497,12 +503,7 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
           <Property Type="String" Name="Addres" Nullable="true" MaxLength="255" />
           <Property Type="Decimal" Name="TuitionFees" Nullable="true" Precision="19" />
           <Property Type="DateTime" Name="DeletedDate" Nullable="true" Precision="23" />
-        </ComplexType>
-        <ComplexType Name="GetStudentFeesPaidDetails_Result">
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="Int32" Name="StudentId" Nullable="false" />
-          <Property Type="DateTime" Name="AmountPaidForDate" Nullable="true" Precision="23" />
-          <Property Type="Boolean" Name="IsAttented" Nullable="true" />
+          <Property Type="String" Name="ImageLocation" Nullable="true" MaxLength="255" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -706,6 +707,18 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetStudentFeesPaidDetails" FunctionName="romansgy_gymModel.Store.GetStudentFeesPaidDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="romansgy_gymModel.GetStudentFeesPaidDetails_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="AmountPaidForDate" ColumnName="AmountPaidForDate" />
+                <ScalarProperty Name="IsAttented" ColumnName="IsAttented" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DeleteStudentFeesPaidDetails" FunctionName="romansgy_gymModel.Store.DeleteStudentFeesPaidDetails" />
+          <FunctionImportMapping FunctionImportName="InsertFeesPaidDetails" FunctionName="romansgy_gymModel.Store.InsertFeesPaidDetails" />
           <FunctionImportMapping FunctionImportName="GetFeesDues" FunctionName="romansgy_gymModel.Store.GetFeesDues">
             <ResultMapping>
               <ComplexTypeMapping TypeName="romansgy_gymModel.GetFeesDues_Result">
@@ -720,21 +733,10 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
                 <ScalarProperty Name="Addres" ColumnName="Addres" />
                 <ScalarProperty Name="TuitionFees" ColumnName="TuitionFees" />
                 <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="ImageLocation" ColumnName="ImageLocation" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetStudentFeesPaidDetails" FunctionName="romansgy_gymModel.Store.GetStudentFeesPaidDetails">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="romansgy_gymModel.GetStudentFeesPaidDetails_Result">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-                <ScalarProperty Name="AmountPaidForDate" ColumnName="AmountPaidForDate" />
-                <ScalarProperty Name="IsAttented" ColumnName="IsAttented" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="DeleteStudentFeesPaidDetails" FunctionName="romansgy_gymModel.Store.DeleteStudentFeesPaidDetails" />
-          <FunctionImportMapping FunctionImportName="InsertFeesPaidDetails" FunctionName="romansgy_gymModel.Store.InsertFeesPaidDetails" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

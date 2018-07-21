@@ -18,6 +18,7 @@ namespace RomansGymManagement.Models
         public string Addres { get; set; }
         public Nullable<decimal> TuitionFees { get; set; }
         public Nullable<System.DateTime> DeletedDate { get; set; }
-        public List<string> PendingMonths { get; set; }
+        public List<System.Tuple<string,int,DateTime>> PendingMonths { get; set; }
+        public string ImageLocation { get; set; }
     }
 }

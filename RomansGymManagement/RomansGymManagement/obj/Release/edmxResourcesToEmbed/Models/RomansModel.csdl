@@ -81,7 +81,6 @@
       <Parameter Name="DeviceId" Mode="In" Type="String" />
     </FunctionImport>
     <EntitySet Name="FeesPaidDetails" EntityType="romansgy_gymModel.FeesPaidDetail" />
-    <FunctionImport Name="GetFeesDues" ReturnType="Collection(romansgy_gymModel.GetFeesDues_Result)" />
     <FunctionImport Name="GetStudentFeesPaidDetails" ReturnType="Collection(romansgy_gymModel.GetStudentFeesPaidDetails_Result)">
       <Parameter Name="studentId" Mode="In" Type="Int32" />
     </FunctionImport>
@@ -93,6 +92,7 @@
       <Parameter Name="amountPaidForDate" Mode="In" Type="DateTime" />
       <Parameter Name="isAttented" Mode="In" Type="Boolean" />
     </FunctionImport>
+    <FunctionImport Name="GetFeesDues" ReturnType="Collection(romansgy_gymModel.GetFeesDues_Result)" />
   </EntityContainer>
   <EntityType Name="IncomeDetail">
     <Key>
@@ -125,9 +125,9 @@
     <Property Name="RegistrationFees" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="TuitionFees" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="ImageLocation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="DeletedDate" Type="DateTime" Precision="0" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
     <Property Name="AdmissionNumber" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="Courses" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
   </EntityType>
@@ -269,6 +269,12 @@
     <Property Name="AmountPaidForDate" Type="DateTime" Precision="3" />
     <Property Name="IsAttented" Type="Boolean" />
   </EntityType>
+  <ComplexType Name="GetStudentFeesPaidDetails_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="Int32" Name="StudentId" Nullable="false" />
+    <Property Type="DateTime" Name="AmountPaidForDate" Nullable="true" Precision="23" />
+    <Property Type="Boolean" Name="IsAttented" Nullable="true" />
+  </ComplexType>
   <ComplexType Name="GetFeesDues_Result">
     <Property Type="Int32" Name="StudentId" Nullable="false" />
     <Property Type="DateTime" Name="FeesLastPaidDate" Nullable="true" Precision="23" />
@@ -281,11 +287,6 @@
     <Property Type="String" Name="Addres" Nullable="true" MaxLength="255" />
     <Property Type="Decimal" Name="TuitionFees" Nullable="true" Precision="19" />
     <Property Type="DateTime" Name="DeletedDate" Nullable="true" Precision="23" />
-  </ComplexType>
-  <ComplexType Name="GetStudentFeesPaidDetails_Result">
-    <Property Type="Int32" Name="ID" Nullable="false" />
-    <Property Type="Int32" Name="StudentId" Nullable="false" />
-    <Property Type="DateTime" Name="AmountPaidForDate" Nullable="true" Precision="23" />
-    <Property Type="Boolean" Name="IsAttented" Nullable="true" />
+    <Property Type="String" Name="ImageLocation" Nullable="true" MaxLength="255" />
   </ComplexType>
 </Schema>
