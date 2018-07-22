@@ -20,7 +20,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/24/2018 12:55:25</publishTime>
     </File>
     <File Include="bin/RomansGymManagement.dll">
-      <publishTime>07/07/2018 12:52:46</publishTime>
+      <publishTime>07/22/2018 20:44:37</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>06/24/2018 12:55:26</publishTime>
@@ -41,13 +41,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/24/2018 12:45:10</publishTime>
     </File>
     <File Include="Models/RomansModel.edmx.diagram">
-      <publishTime>02/07/2018 22:22:08</publishTime>
+      <publishTime>07/22/2018 15:18:18</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>06/24/2018 12:58:27</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/07/2018 12:54:23</publishTime>
+      <publishTime>07/22/2018 20:46:44</publishTime>
     </File>
   </ItemGroup>
 </Project>
