@@ -10,14 +10,13 @@
 namespace RomansGymManagement.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class FeesPaidDetail
+    public partial class GetStudentFeesDues_Result
     {
-        public int ID { get; set; }
         public int StudentId { get; set; }
-        public Nullable<System.DateTime> AmountPaidForDate { get; set; }
-        public Nullable<bool> IsAttented { get; set; }
-        public int FeePaymentId { get; set; }
+        public Nullable<System.DateTime> FeesLastPaidDate { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public Nullable<System.DateTime> DeletedDate { get; set; }
+        public string ImageLocation { get; set; }
     }
 }

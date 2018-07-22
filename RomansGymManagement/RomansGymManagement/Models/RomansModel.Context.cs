@@ -36,6 +36,7 @@ namespace RomansGymManagement.Models
         public virtual DbSet<RegistrationFee> RegistrationFees { get; set; }
         public virtual DbSet<DeviceNotification> DeviceNotifications { get; set; }
         public virtual DbSet<FeesPaidDetail> FeesPaidDetails { get; set; }
+        public virtual DbSet<FeePayment> FeePayments { get; set; }
     
         public virtual ObjectResult<Nullable<int>> UpsertStudentCourse(Nullable<int> studentID, string name, Nullable<int> age, string sex, string parentName, string mobileNumber, string addres, Nullable<decimal> registrationFees, Nullable<decimal> tuitionFees, string imageLocation, Nullable<System.DateTime> createdDate, Nullable<System.DateTime> lastUpdatedDate, Nullable<System.DateTime> deletedDate, string courseXML)
         {
@@ -295,6 +296,125 @@ namespace RomansGymManagement.Models
         public virtual ObjectResult<GetFeesDues_Result> GetFeesDues()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetFeesDues_Result>("GetFeesDues");
+        }
+    
+        public virtual ObjectResult<GetStudentFeesDues_Result> GetStudentFeesDues(Nullable<int> studentId)
+        {
+            var studentIdParameter = studentId.HasValue ?
+                new ObjectParameter("studentId", studentId) :
+                new ObjectParameter("studentId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetStudentFeesDues_Result>("GetStudentFeesDues", studentIdParameter);
+        }
+    
+        public virtual int InsertFeePaymentAndFeesPaidDetails(Nullable<int> paidAmount, Nullable<System.DateTime> paymentDate, string month, Nullable<int> studentId, Nullable<System.DateTime> amountPaidForDate, Nullable<bool> isAttented)
+        {
+            var paidAmountParameter = paidAmount.HasValue ?
+                new ObjectParameter("paidAmount", paidAmount) :
+                new ObjectParameter("paidAmount", typeof(int));
+    
+            var paymentDateParameter = paymentDate.HasValue ?
+                new ObjectParameter("paymentDate", paymentDate) :
+                new ObjectParameter("paymentDate", typeof(System.DateTime));
+    
+            var monthParameter = month != null ?
+                new ObjectParameter("month", month) :
+                new ObjectParameter("month", typeof(string));
+    
+            var studentIdParameter = studentId.HasValue ?
+                new ObjectParameter("studentId", studentId) :
+                new ObjectParameter("studentId", typeof(int));
+    
+            var amountPaidForDateParameter = amountPaidForDate.HasValue ?
+                new ObjectParameter("amountPaidForDate", amountPaidForDate) :
+                new ObjectParameter("amountPaidForDate", typeof(System.DateTime));
+    
+            var isAttentedParameter = isAttented.HasValue ?
+                new ObjectParameter("isAttented", isAttented) :
+                new ObjectParameter("isAttented", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertFeePaymentAndFeesPaidDetails", paidAmountParameter, paymentDateParameter, monthParameter, studentIdParameter, amountPaidForDateParameter, isAttentedParameter);
+        }
+    
+        public virtual int InsertFeePayment(Nullable<int> paidAmount, Nullable<System.DateTime> paymentDate, string month, Nullable<int> studentId)
+        {
+            var paidAmountParameter = paidAmount.HasValue ?
+                new ObjectParameter("paidAmount", paidAmount) :
+                new ObjectParameter("paidAmount", typeof(int));
+    
+            var paymentDateParameter = paymentDate.HasValue ?
+                new ObjectParameter("paymentDate", paymentDate) :
+                new ObjectParameter("paymentDate", typeof(System.DateTime));
+    
+            var monthParameter = month != null ?
+                new ObjectParameter("month", month) :
+                new ObjectParameter("month", typeof(string));
+    
+            var studentIdParameter = studentId.HasValue ?
+                new ObjectParameter("studentId", studentId) :
+                new ObjectParameter("studentId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertFeePayment", paidAmountParameter, paymentDateParameter, monthParameter, studentIdParameter);
+        }
+    
+        public virtual int InsertStudentFeesPaidDetails(Nullable<int> feePaymentId, Nullable<System.DateTime> amountPaidForDate, Nullable<int> studentId, Nullable<bool> isAttented)
+        {
+            var feePaymentIdParameter = feePaymentId.HasValue ?
+                new ObjectParameter("feePaymentId", feePaymentId) :
+                new ObjectParameter("feePaymentId", typeof(int));
+    
+            var amountPaidForDateParameter = amountPaidForDate.HasValue ?
+                new ObjectParameter("amountPaidForDate", amountPaidForDate) :
+                new ObjectParameter("amountPaidForDate", typeof(System.DateTime));
+    
+            var studentIdParameter = studentId.HasValue ?
+                new ObjectParameter("studentId", studentId) :
+                new ObjectParameter("studentId", typeof(int));
+    
+            var isAttentedParameter = isAttented.HasValue ?
+                new ObjectParameter("isAttented", isAttented) :
+                new ObjectParameter("isAttented", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertStudentFeesPaidDetails", feePaymentIdParameter, amountPaidForDateParameter, studentIdParameter, isAttentedParameter);
+        }
+    
+        public virtual int InsertStudentFeePayment(Nullable<int> paidAmount, Nullable<System.DateTime> paymentDate, string month, Nullable<int> studentId, ObjectParameter insertedId)
+        {
+            var paidAmountParameter = paidAmount.HasValue ?
+                new ObjectParameter("paidAmount", paidAmount) :
+                new ObjectParameter("paidAmount", typeof(int));
+    
+            var paymentDateParameter = paymentDate.HasValue ?
+                new ObjectParameter("paymentDate", paymentDate) :
+                new ObjectParameter("paymentDate", typeof(System.DateTime));
+    
+            var monthParameter = month != null ?
+                new ObjectParameter("month", month) :
+                new ObjectParameter("month", typeof(string));
+    
+            var studentIdParameter = studentId.HasValue ?
+                new ObjectParameter("studentId", studentId) :
+                new ObjectParameter("studentId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertStudentFeePayment", paidAmountParameter, paymentDateParameter, monthParameter, studentIdParameter, insertedId);
+        }
+    
+        public virtual ObjectResult<GetFeepayment_Result> GetFeepayment(Nullable<int> studentId)
+        {
+            var studentIdParameter = studentId.HasValue ?
+                new ObjectParameter("studentId", studentId) :
+                new ObjectParameter("studentId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetFeepayment_Result>("GetFeepayment", studentIdParameter);
+        }
+    
+        public virtual int DeleteFeepaymentAndFeesPaidDetails(Nullable<int> feepaymentId)
+        {
+            var feepaymentIdParameter = feepaymentId.HasValue ?
+                new ObjectParameter("feepaymentId", feepaymentId) :
+                new ObjectParameter("feepaymentId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteFeepaymentAndFeesPaidDetails", feepaymentIdParameter);
         }
     }
 }

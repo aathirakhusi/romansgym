@@ -190,6 +190,7 @@
     <EntitySetMapping Name="FeesPaidDetails">
       <EntityTypeMapping TypeName="romansgy_gymModel.FeesPaidDetail">
         <MappingFragment StoreEntitySet="FeesPaidDetails">
+          <ScalarProperty Name="FeePaymentId" ColumnName="FeePaymentId" />
           <ScalarProperty Name="IsAttented" ColumnName="IsAttented" />
           <ScalarProperty Name="AmountPaidForDate" ColumnName="AmountPaidForDate" />
           <ScalarProperty Name="StudentId" ColumnName="StudentId" />
@@ -227,5 +228,43 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetStudentFeesDues" FunctionName="romansgy_gymModel.Store.GetStudentFeesDues">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="romansgy_gymModel.GetStudentFeesDues_Result">
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+          <ScalarProperty Name="FeesLastPaidDate" ColumnName="FeesLastPaidDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+          <ScalarProperty Name="ImageLocation" ColumnName="ImageLocation" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="FeePayments">
+      <EntityTypeMapping TypeName="romansgy_gymModel.FeePayment">
+        <MappingFragment StoreEntitySet="FeePayment">
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+          <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="InsertFeePaymentAndFeesPaidDetails" FunctionName="romansgy_gymModel.Store.InsertFeePaymentAndFeesPaidDetails" />
+    <FunctionImportMapping FunctionImportName="InsertFeePayment" FunctionName="romansgy_gymModel.Store.InsertFeePayment" />
+    <FunctionImportMapping FunctionImportName="InsertStudentFeesPaidDetails" FunctionName="romansgy_gymModel.Store.InsertStudentFeesPaidDetails" />
+    <FunctionImportMapping FunctionImportName="InsertStudentFeePayment" FunctionName="romansgy_gymModel.Store.InsertStudentFeePayment" />
+    <FunctionImportMapping FunctionImportName="GetFeepayment" FunctionName="romansgy_gymModel.Store.GetFeepayment">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="romansgy_gymModel.GetFeepayment_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+          <ScalarProperty Name="PaidAmount" ColumnName="PaidAmount" />
+          <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DeleteFeepaymentAndFeesPaidDetails" FunctionName="romansgy_gymModel.Store.DeleteFeepaymentAndFeesPaidDetails" />
   </EntityContainerMapping>
 </Mapping>

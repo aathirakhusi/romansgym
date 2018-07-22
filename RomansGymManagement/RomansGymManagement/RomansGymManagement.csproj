@@ -115,8 +115,14 @@
     <Compile Include="Models\ExpenseHeadDetail.cs">
       <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FeePayment.cs">
+      <DependentUpon>RomansModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\FeesPaymentModel.cs" />
     <Compile Include="Models\FeesPaidDetail.cs">
+      <DependentUpon>RomansModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetFeepayment_Result.cs">
       <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetFeesDues_Result.cs">
@@ -129,6 +135,9 @@
       <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetStudentCourse_Result1.cs">
+      <DependentUpon>RomansModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetStudentFeesDues_Result.cs">
       <DependentUpon>RomansModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetStudentFeesPaidDetails_Result.cs">

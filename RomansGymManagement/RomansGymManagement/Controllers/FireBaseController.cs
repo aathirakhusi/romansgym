@@ -10,7 +10,6 @@ using System.Web.Http.Description;
 using System.Web.Script.Serialization;
 using RomansGymManagement.Models;
 using System.Runtime.Serialization.Json;
-using System.Web.Http.Description;
 
 namespace RomansGymManagement.Controllers
 {

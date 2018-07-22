@@ -20,7 +20,7 @@ namespace RomansGymManagement.Controllers
         // GET: api/ExpenseHeadDetails
         public IQueryable<ExpenseHeadDetail> GetExpenseHeadDetails()
         {
-            return db.ExpenseHeadDetails;
+            return db.ExpenseHeadDetails.OrderByDescending(x => x.ExpenseDate);
         }
 
         // GET: api/ExpenseHeadDetails/5

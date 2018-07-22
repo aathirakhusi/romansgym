@@ -18,6 +18,13 @@ namespace RomansGymManagement.Controllers
     public class StudentManagementController : ApiController
     {
         private romansgy_gymEntities db = new romansgy_gymEntities();
+
+        // GET: api/Student
+        [Route("api/Student/MaxId")]
+        public int GetIncomeDetails()
+        {
+            return db.Students.Max(x => x.StudentID);
+        }
         // POST: api/Student
         [ResponseType(typeof(StudentManagementModel))]
         [Route("api/Student", Name = "UpsertStudentDetails")]

@@ -11,6 +11,7 @@ using System.Web;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Data.Entity.Core.Objects;
 using RomansGymManagement.Models;
 
 namespace RomansGymManagement.Controllers
@@ -50,11 +51,6 @@ namespace RomansGymManagement.Controllers
                 var months = MonthsBetween(nextMonth, today);
                // var items = months.Select(i => i.Item1).ToList();
                 var items = months.Select(i => new { i.Item1,i.Item2,i.Item3}).AsEnumerable().Select(c=> new Tuple<string,int,DateTime>(c.Item1,c.Item2,c.Item3)).ToList();
-               /* codes = codesRepo.SearchFor(predicate)
-    .Select(c => new { c.Id, c.Flag })
-    .AsEnumerable()
-    .Select(c => new Tuple<string, byte>(c.Id, c.Flag))
-    .ToList();*/
                 if (caldate > 0)
                 {
                     fdm.PendingMonths = items;
@@ -67,6 +63,39 @@ namespace RomansGymManagement.Controllers
             {
                 studentsFeesDuesList.Remove(itemToRemove);
             }*/
+            studentsFeesDuesList = studentsFeesDuesList.OrderByDescending(x => x.PendingMonths.Count).ToList();
+            return Request.CreateResponse(HttpStatusCode.OK, studentsFeesDuesList);
+        }
+
+        // GET: api/Fees
+        [ResponseType(typeof(GetStudentFeesDues_Result))]
+        [Route("api/Fees/Student/{studentId}", Name = "StudentFeesDues")]
+        [HttpGet]
+        public HttpResponseMessage StudentFeesDues(int studentId)
+        {
+            var feesDuesList = db.GetStudentFeesDues(studentId).ToList();
+            List<FeesDuesModel> studentsFeesDuesList = new List<FeesDuesModel>();
+            foreach (var feesDues in feesDuesList)
+            {
+                FeesDuesModel fdm = new FeesDuesModel();
+                fdm.StudentId = feesDues.StudentId;
+                fdm.CreatedDate = feesDues.CreatedDate;
+                fdm.DeletedDate = feesDues.DeletedDate;
+                fdm.FeesLastPaidDate = feesDues.FeesLastPaidDate;
+                fdm.ImageLocation = feesDues.ImageLocation;
+                var today = DateTime.Today; //
+                var lastPaidDate = DateTime.Parse(feesDues.FeesLastPaidDate != null ? feesDues.FeesLastPaidDate.ToString() : feesDues.CreatedDate.ToString());
+                var nextMonth = lastPaidDate.AddMonths(1);
+                var caldate = ((today.Year - lastPaidDate.Year) * 12) + today.Month - lastPaidDate.Month;
+                var months = MonthsBetween(nextMonth, today);
+                var items = months.Select(i => new { i.Item1, i.Item2, i.Item3 }).AsEnumerable().Select(c => new Tuple<string, int, DateTime>(c.Item1, c.Item2, c.Item3)).ToList();
+                if (caldate > 0)
+                {
+                    fdm.PendingMonths = items;
+                }
+                studentsFeesDuesList.Add(fdm);
+            }
+            studentsFeesDuesList.RemoveAll(t => t.PendingMonths == null);
             studentsFeesDuesList = studentsFeesDuesList.OrderByDescending(x => x.PendingMonths.Count).ToList();
             return Request.CreateResponse(HttpStatusCode.OK, studentsFeesDuesList);
         }
@@ -116,14 +145,43 @@ namespace RomansGymManagement.Controllers
             {
                 return BadRequest(ModelState);
             }
-            foreach (var item in feesPaymentModel.AmountPaidForDate)
+            ObjectParameter InsertedId = new ObjectParameter("insertedId", typeof(Int32));
+            var feePaymentId = db.InsertStudentFeePayment(feesPaymentModel.PaidAmount, feesPaymentModel.PaymentDate, feesPaymentModel.Month, feesPaymentModel.StudentId, InsertedId);
+            foreach (var amountPaidForDate in feesPaymentModel.AmountPaidForDate)
             {
-                var result = db.InsertFeesPaidDetails(feesPaymentModel.StudentId, item, feesPaymentModel.IsAttented);
+              
+                var result = db.InsertStudentFeesPaidDetails((int)InsertedId.Value, amountPaidForDate, feesPaymentModel.StudentId, feesPaymentModel.IsAttented);
             }
 
             return CreatedAtRoute("InsertFeesPaidDetails", new { id = feesPaymentModel.StudentId }, feesPaymentModel);
         }
 
+        // GET: api/Fees
+        [ResponseType(typeof(GetStudentFeesDues_Result))]
+        [Route("api/Fees/Feepayment/{studentId}", Name = "GetFeepayment")]
+        [HttpGet]
+        public HttpResponseMessage GetFeepayment(int studentId)
+        {
+            var feesDuesList = db.GetFeepayment(studentId).ToList();
+            if (feesDuesList.Any())
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, feesDuesList);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NoContent);
+            }
+        }
+        // DELETE: api/Fees/Feepayment
+
+        [Route("api/Fees/Feepayment/{feepaymentId}", Name = "DeleteFeepaymentAndFeesPaidDetails")]
+        [HttpDelete]
+        public HttpResponseMessage DeleteFeepaymentAndFeesPaidDetails(int feepaymentId )
+        {
+            var result = db.DeleteFeepaymentAndFeesPaidDetails(feepaymentId);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+
+        }
         private static IEnumerable<Tuple<string, int, DateTime>> MonthsBetween(DateTime startDate, DateTime endDate)
         {
             DateTime iterator;
@@ -149,7 +207,5 @@ namespace RomansGymManagement.Controllers
                 iterator = iterator.AddMonths(1);
             }
         }
-
     }
-
 }

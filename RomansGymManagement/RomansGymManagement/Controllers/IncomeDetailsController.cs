@@ -20,7 +20,7 @@ namespace RomansGymManagement.Controllers
         // GET: api/IncomeDetails
         public IQueryable<IncomeDetail> GetIncomeDetails()
         {
-            return db.IncomeDetails;
+            return db.IncomeDetails.OrderByDescending(x=>x.IncomeDate);
         }
 
         // GET: api/IncomeDetails/5

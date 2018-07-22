@@ -26,6 +26,16 @@
     <Property Name="ExpenseDate" Type="datetime" Nullable="false" />
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="FeePayment">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentId" Type="int" Nullable="false" />
+    <Property Name="PaidAmount" Type="int" Nullable="false" />
+    <Property Name="PaymentDate" Type="datetime" Nullable="false" />
+    <Property Name="Month" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
   <EntityType Name="FeesPaidDetails">
     <Key>
       <PropertyRef Name="ID" />
@@ -34,6 +44,7 @@
     <Property Name="StudentId" Type="int" Nullable="false" />
     <Property Name="AmountPaidForDate" Type="datetime" />
     <Property Name="IsAttented" Type="bit" />
+    <Property Name="FeePaymentId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="IncomeDetails">
     <Key>
@@ -103,16 +114,25 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
   <Function Name="DeleteDeviceNotification" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
     <Parameter Name="DeviceId" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="DeleteFeepaymentAndFeesPaidDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="feepaymentId" Type="int" Mode="In" />
+  </Function>
   <Function Name="DeleteStudentFeesPaidDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
     <Parameter Name="feesPaidDetailsId" Type="int" Mode="In" />
   </Function>
   <Function Name="GetFCMIds" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db" />
+  <Function Name="GetFeepayment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="studentId" Type="int" Mode="In" />
+  </Function>
   <Function Name="GetFeesDues" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db" />
   <Function Name="GetStudentCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
     <Parameter Name="StudentID" Type="int" Mode="In" />
   </Function>
   <Function Name="GetStudentCoursevOne" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
     <Parameter Name="StudentID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetStudentFeesDues" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="studentId" Type="int" Mode="In" />
   </Function>
   <Function Name="GetStudentFeesPaidDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
     <Parameter Name="studentId" Type="int" Mode="In" />
@@ -123,9 +143,36 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
     <Parameter Name="userName" Type="varchar" Mode="In" />
     <Parameter Name="password" Type="varchar" Mode="In" />
   </Function>
+  <Function Name="InsertFeePayment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="paidAmount" Type="int" Mode="In" />
+    <Parameter Name="paymentDate" Type="datetime" Mode="In" />
+    <Parameter Name="month" Type="varchar" Mode="In" />
+    <Parameter Name="studentId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="InsertFeePaymentAndFeesPaidDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="paidAmount" Type="int" Mode="In" />
+    <Parameter Name="paymentDate" Type="datetime" Mode="In" />
+    <Parameter Name="month" Type="varchar" Mode="In" />
+    <Parameter Name="studentId" Type="int" Mode="In" />
+    <Parameter Name="amountPaidForDate" Type="datetime" Mode="In" />
+    <Parameter Name="isAttented" Type="bit" Mode="In" />
+  </Function>
   <Function Name="InsertFeesPaidDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
     <Parameter Name="studentId" Type="int" Mode="In" />
     <Parameter Name="amountPaidForDate" Type="datetime" Mode="In" />
+    <Parameter Name="isAttented" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="InsertStudentFeePayment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="paidAmount" Type="int" Mode="In" />
+    <Parameter Name="paymentDate" Type="datetime" Mode="In" />
+    <Parameter Name="month" Type="varchar" Mode="In" />
+    <Parameter Name="studentId" Type="int" Mode="In" />
+    <Parameter Name="insertedId" Type="int" Mode="InOut" />
+  </Function>
+  <Function Name="InsertStudentFeesPaidDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
+    <Parameter Name="feePaymentId" Type="int" Mode="In" />
+    <Parameter Name="amountPaidForDate" Type="datetime" Mode="In" />
+    <Parameter Name="studentId" Type="int" Mode="In" />
     <Parameter Name="isAttented" Type="bit" Mode="In" />
   </Function>
   <Function Name="UpdateImageLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="romansgy_db">
@@ -177,6 +224,7 @@ warning 6002: The table/view 'romansgy_gym.romansgy_db.StudentCourse' does not h
     <EntitySet Name="Course" EntityType="Self.Course" Schema="romansgy_db" store:Type="Tables" />
     <EntitySet Name="DeviceNotification" EntityType="Self.DeviceNotification" Schema="romansgy_db" store:Type="Tables" />
     <EntitySet Name="ExpenseHeadDetails" EntityType="Self.ExpenseHeadDetails" Schema="romansgy_db" store:Type="Tables" />
+    <EntitySet Name="FeePayment" EntityType="Self.FeePayment" Schema="romansgy_db" store:Type="Tables" />
     <EntitySet Name="FeesPaidDetails" EntityType="Self.FeesPaidDetails" Schema="romansgy_db" store:Type="Tables" />
     <EntitySet Name="IncomeDetails" EntityType="Self.IncomeDetails" Schema="romansgy_db" store:Type="Tables" />
     <EntitySet Name="RegistrationFees" EntityType="Self.RegistrationFees" Schema="romansgy_db" store:Type="Tables" />

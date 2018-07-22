@@ -93,6 +93,43 @@
       <Parameter Name="isAttented" Mode="In" Type="Boolean" />
     </FunctionImport>
     <FunctionImport Name="GetFeesDues" ReturnType="Collection(romansgy_gymModel.GetFeesDues_Result)" />
+    <FunctionImport Name="GetStudentFeesDues" ReturnType="Collection(romansgy_gymModel.GetStudentFeesDues_Result)">
+      <Parameter Name="studentId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="FeePayments" EntityType="romansgy_gymModel.FeePayment" />
+    <FunctionImport Name="InsertFeePaymentAndFeesPaidDetails">
+      <Parameter Name="paidAmount" Mode="In" Type="Int32" />
+      <Parameter Name="paymentDate" Mode="In" Type="DateTime" />
+      <Parameter Name="month" Mode="In" Type="String" />
+      <Parameter Name="studentId" Mode="In" Type="Int32" />
+      <Parameter Name="amountPaidForDate" Mode="In" Type="DateTime" />
+      <Parameter Name="isAttented" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="InsertFeePayment">
+      <Parameter Name="paidAmount" Mode="In" Type="Int32" />
+      <Parameter Name="paymentDate" Mode="In" Type="DateTime" />
+      <Parameter Name="month" Mode="In" Type="String" />
+      <Parameter Name="studentId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="InsertStudentFeesPaidDetails">
+      <Parameter Name="feePaymentId" Mode="In" Type="Int32" />
+      <Parameter Name="amountPaidForDate" Mode="In" Type="DateTime" />
+      <Parameter Name="studentId" Mode="In" Type="Int32" />
+      <Parameter Name="isAttented" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="InsertStudentFeePayment">
+      <Parameter Name="paidAmount" Mode="In" Type="Int32" />
+      <Parameter Name="paymentDate" Mode="In" Type="DateTime" />
+      <Parameter Name="month" Mode="In" Type="String" />
+      <Parameter Name="studentId" Mode="In" Type="Int32" />
+      <Parameter Name="insertedId" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetFeepayment" ReturnType="Collection(romansgy_gymModel.GetFeepayment_Result)">
+      <Parameter Name="studentId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteFeepaymentAndFeesPaidDetails">
+      <Parameter Name="feepaymentId" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="IncomeDetail">
     <Key>
@@ -268,6 +305,7 @@
     <Property Name="StudentId" Type="Int32" Nullable="false" />
     <Property Name="AmountPaidForDate" Type="DateTime" Precision="3" />
     <Property Name="IsAttented" Type="Boolean" />
+    <Property Name="FeePaymentId" Type="Int32" Nullable="false" />
   </EntityType>
   <ComplexType Name="GetStudentFeesPaidDetails_Result">
     <Property Type="Int32" Name="ID" Nullable="false" />
@@ -288,5 +326,29 @@
     <Property Type="Decimal" Name="TuitionFees" Nullable="true" Precision="19" />
     <Property Type="DateTime" Name="DeletedDate" Nullable="true" Precision="23" />
     <Property Type="String" Name="ImageLocation" Nullable="true" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="GetStudentFeesDues_Result">
+    <Property Type="Int32" Name="StudentId" Nullable="false" />
+    <Property Type="DateTime" Name="FeesLastPaidDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="DeletedDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="ImageLocation" Nullable="true" MaxLength="255" />
+  </ComplexType>
+  <EntityType Name="FeePayment">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentId" Type="Int32" Nullable="false" />
+    <Property Name="PaidAmount" Type="Int32" Nullable="false" />
+    <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Month" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <ComplexType Name="GetFeepayment_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="Int32" Name="StudentId" Nullable="false" />
+    <Property Type="Int32" Name="PaidAmount" Nullable="false" />
+    <Property Type="DateTime" Name="PaymentDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="Month" Nullable="false" MaxLength="255" />
   </ComplexType>
 </Schema>

@@ -10,5 +10,9 @@ namespace RomansGymManagement.Models
         public int StudentId { get; set; }
         public List<System.DateTime> AmountPaidForDate { get; set; }
         public Nullable<bool> IsAttented { get; set; }
+        public int PaidAmount { get; set; }
+        public DateTime PaymentDate { get; set; }
+        public string Month { get; set; }
+
     }
 }
